@@ -1,5 +1,7 @@
 # Moonriver 🌙
 
+<img src="docs/public/logo.svg" align="right" width="200" alt="Moonriver Logo" />
+
 A terminal-based console for connecting to and interacting with **Klipper**
 instances via the **Moonraker** WebSocket API.
 
