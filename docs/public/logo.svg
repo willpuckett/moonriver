@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Moon -->
+  <circle cx="100" cy="100" r="80" fill="#FFD700" opacity="0.9"/>
+  <circle cx="110" cy="90" r="15" fill="#FFA500" opacity="0.3"/>
+  <circle cx="85" cy="110" r="10" fill="#FFA500" opacity="0.3"/>
+  <circle cx="105" cy="115" r="8" fill="#FFA500" opacity="0.3"/>
+  
+  <!-- River/Flow lines -->
+  <path d="M 30 140 Q 60 130, 80 140 T 120 140 T 160 140" 
+        stroke="#4A9EFF" 
+        stroke-width="4" 
+        fill="none" 
+        opacity="0.7"/>
+  <path d="M 35 155 Q 65 145, 85 155 T 125 155 T 165 155" 
+        stroke="#4A9EFF" 
+        stroke-width="3" 
+        fill="none" 
+        opacity="0.5"/>
+  
+  <!-- Stars -->
+  <circle cx="40" cy="40" r="2" fill="white"/>
+  <circle cx="160" cy="30" r="2" fill="white"/>
+  <circle cx="170" cy="60" r="1.5" fill="white"/>
+  <circle cx="30" cy="70" r="1.5" fill="white"/>
+</svg>

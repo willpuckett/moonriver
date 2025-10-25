@@ -1,0 +1,12 @@
+# Example Moonriver Configuration
+# Copy this file to moonriver.toml and adjust as needed
+
+[connection]
+# Moonraker host address
+host = "localhost"
+
+# Moonraker port
+port = 7125
+
+# API key (optional, if your Moonraker instance requires authentication)
+# api_key = "your-api-key-here"

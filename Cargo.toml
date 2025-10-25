@@ -1,0 +1,32 @@
+[package]
+name = "moonriver"
+version = "0.1.0"
+edition = "2021"
+authors = ["Moonriver Contributors"]
+description = "A terminal-based console for connecting to and interacting with Klipper instances via the Moonraker WebSocket API"
+readme = "README.md"
+homepage = "https://willpuckett.github.io/moonriver/"
+documentation = "https://willpuckett.github.io/moonriver/"
+repository = "https://github.com/willpuckett/moonriver"
+license = "MIT"
+keywords = ["klipper", "moonraker", "3dprinting", "terminal", "repl"]
+categories = ["command-line-utilities"]
+exclude = [
+    "docs/*",
+    ".github/*",
+    "target/*",
+    "examples/*",
+]
+
+[dependencies]
+tokio = { version = "1.41", features = ["full"] }
+tokio-tungstenite = "0.24"
+futures-util = "0.3"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+clap = { version = "4.5", features = ["derive"] }
+rustyline = "14.0"
+colored = "2.1"
+anyhow = "1.0"
+url = "2.5"
+dirs = "5.0"
