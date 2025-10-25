@@ -4,7 +4,7 @@ export default defineConfig({
   title: "Moonriver",
   description:
     "A terminal-based console for connecting to Klipper via Moonraker WebSocket API",
-  base: "/moonriver/",
+  base: "/",
   ignoreDeadLinks: true,
 
   themeConfig: {
