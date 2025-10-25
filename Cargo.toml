@@ -11,12 +11,7 @@ repository = "https://github.com/willpuckett/moonriver"
 license = "MIT"
 keywords = ["klipper", "moonraker", "3dprinting", "terminal", "repl"]
 categories = ["command-line-utilities"]
-exclude = [
-    "docs/*",
-    ".github/*",
-    "target/*",
-    "examples/*",
-]
+exclude = ["docs/*", ".github/*", "target/*", "examples/*"]
 
 [dependencies]
 tokio = { version = "1.41", features = ["full"] }
