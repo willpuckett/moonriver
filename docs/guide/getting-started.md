@@ -20,11 +20,13 @@ The simplest method is to install directly from crates.io:
 cargo install moonriver
 ```
 
-This will download, compile, and install Moonriver to your Cargo bin directory (usually `~/.cargo/bin/`).
+This will download, compile, and install Moonriver to your Cargo bin directory
+(usually `~/.cargo/bin/`).
 
 ### Method 2: Using cargo-binstall
 
-If you have [cargo-binstall](https://github.com/cargo-bins/cargo-binstall) installed:
+If you have [cargo-binstall](https://github.com/cargo-bins/cargo-binstall)
+installed:
 
 ```bash
 cargo binstall moonriver
@@ -38,7 +40,7 @@ For the latest development version:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/moonriver.git
+git clone https://github.com/willpuckett/moonriver.git
 cd moonriver
 
 # Build in release mode
@@ -58,6 +60,7 @@ moonriver --version
 ```
 
 You should see output like:
+
 ```
 moonriver 0.1.0
 ```
@@ -71,11 +74,13 @@ moonriver --host <your-printer-ip> --port 7125
 ```
 
 For example:
+
 ```bash
 moonriver --host 192.168.1.100 --port 7125
 ```
 
 If successful, you'll see:
+
 ```
 Connecting to ws://192.168.1.100:7125/websocket...
 Connected to Moonraker!
@@ -85,7 +90,7 @@ Type your G-code commands below. Use Ctrl+D or 'exit' to quit.
 Use ',' to separate multiple commands on one line.
 Type 'M112' for emergency stop.
 
-> 
+>
 ```
 
 ## Basic Usage
@@ -149,6 +154,7 @@ alias moon-test='moonriver --host test-printer.local --port 7125'
 ```
 
 Then simply run:
+
 ```bash
 moon
 ```

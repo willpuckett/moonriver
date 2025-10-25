@@ -1,13 +1,14 @@
 # Contributing to Moonriver 🌙
 
-Thank you for your interest in contributing to Moonriver! We welcome contributions from everyone.
+Thank you for your interest in contributing to Moonriver! We welcome
+contributions from everyone.
 
 ## Getting Started
 
 1. **Fork the repository** on GitHub
 2. **Clone your fork** locally:
    ```bash
-   git clone https://github.com/yourusername/moonriver.git
+   git clone https://github.com/willpuckett/moonriver.git
    cd moonriver
    ```
 3. **Create a branch** for your changes:
@@ -92,8 +93,10 @@ cargo run -- --host localhost --port 7125
 
 ## Questions?
 
-Feel free to open an issue with the `question` label if you need help or clarification.
+Feel free to open an issue with the `question` label if you need help or
+clarification.
 
 ## License
 
-By contributing to Moonriver, you agree that your contributions will be licensed under the MIT License.
+By contributing to Moonriver, you agree that your contributions will be licensed
+under the MIT License.

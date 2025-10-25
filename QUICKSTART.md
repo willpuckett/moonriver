@@ -8,7 +8,7 @@ This guide will help you get started with Moonriver quickly.
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/moonriver.git
+git clone https://github.com/willpuckett/moonriver.git
 cd moonriver
 
 # Build the project
@@ -89,6 +89,7 @@ Type `M112` to send an emergency stop to your printer:
 ### Syntax Highlighting
 
 Commands are color-coded:
+
 - **Green**: G-code commands (G0, M105, etc.)
 - **Cyan**: Klipper macros
 - **Yellow**: Warnings
@@ -96,7 +97,8 @@ Commands are color-coded:
 
 ## Tips
 
-1. **Save Commands**: Your command history is automatically saved to `~/.moonriver_history`
+1. **Save Commands**: Your command history is automatically saved to
+   `~/.moonriver_history`
 2. **Exit**: Type `exit` or press Ctrl+D to quit
 3. **Interrupt**: Press Ctrl+C to cancel current input (doesn't exit)
 4. **Case Insensitive**: G-code commands are case-insensitive (G28 = g28)
@@ -104,12 +106,14 @@ Commands are color-coded:
 ## Common Commands
 
 ### Homing
+
 ```
 G28        # Home all axes
 G28 X Y    # Home X and Y only
 ```
 
 ### Temperature
+
 ```
 M105                              # Get current temperature
 M104 S200                         # Set extruder temperature
@@ -119,6 +123,7 @@ M190 S60                          # Set and wait for bed temperature
 ```
 
 ### Movement
+
 ```
 G0 X100 Y100 Z10 F3000   # Move to position
 G28                       # Home all axes
@@ -127,6 +132,7 @@ G91                       # Relative positioning
 ```
 
 ### Klipper Specific
+
 ```
 GET_POSITION              # Get current position
 QUERY_ENDSTOPS            # Check endstop status
@@ -156,4 +162,5 @@ If you can't connect:
 - Read the full [README](README.md) for more features
 - Check [CONTRIBUTING](CONTRIBUTING.md) to contribute
 - See [examples/](examples/) for usage examples
-- Report issues on [GitHub Issues](https://github.com/yourusername/moonriver/issues)
+- Report issues on
+  [GitHub Issues](https://github.com/willpuckett/moonriver/issues)

@@ -138,4 +138,4 @@ async fn main() -> Result<()> {
 
 - [Client API](/api/client) - MoonrakerClient details
 - [REPL API](/api/repl) - REPL implementation
-- [Source Code](https://github.com/yourusername/moonriver) - View on GitHub
+- [Source Code](https://github.com/willpuckett/moonriver) - View on GitHub

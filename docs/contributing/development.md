@@ -14,7 +14,7 @@ Thank you for your interest in contributing to Moonriver!
 
 ```bash
 # Fork and clone the repository
-git clone https://github.com/yourusername/moonriver.git
+git clone https://github.com/willpuckett/moonriver.git
 cd moonriver
 
 # Build the project
@@ -75,7 +75,7 @@ cargo run -- --host localhost --port 7125
 
 Document public APIs:
 
-```rust
+````rust
 /// Connects to a Moonraker instance via WebSocket
 ///
 /// # Arguments
@@ -90,7 +90,7 @@ Document public APIs:
 pub async fn connect(url: &str) -> Result<Self> {
     // Implementation
 }
-```
+````
 
 ## Commit Guidelines
 
@@ -105,6 +105,7 @@ Write clear, concise commit messages:
 - **Chore**: Maintenance tasks
 
 Examples:
+
 ```
 Add: tab completion for user macros
 Fix: connection timeout on slow networks
@@ -187,7 +188,7 @@ cargo run -- --host localhost --port 7125
 
 Have an idea? Open an issue on GitHub:
 
-1. Go to [Issues](https://github.com/yourusername/moonriver/issues)
+1. Go to [Issues](https://github.com/willpuckett/moonriver/issues)
 2. Click "New Issue"
 3. Select "Feature Request"
 4. Describe:
@@ -199,7 +200,7 @@ Have an idea? Open an issue on GitHub:
 
 Found a bug? Report it:
 
-1. Go to [Issues](https://github.com/yourusername/moonriver/issues)
+1. Go to [Issues](https://github.com/willpuckett/moonriver/issues)
 2. Click "New Issue"
 3. Select "Bug Report"
 4. Include:
@@ -213,7 +214,7 @@ Found a bug? Report it:
 
 Have questions? Feel free to:
 
-- Open a [Discussion](https://github.com/yourusername/moonriver/discussions)
+- Open a [Discussion](https://github.com/willpuckett/moonriver/discussions)
 - Join our community chat (if available)
 - Ask in an issue with the `question` label
 
@@ -223,11 +224,13 @@ Be respectful and inclusive. We welcome contributors from all backgrounds.
 
 ## License
 
-By contributing, you agree that your contributions will be licensed under the MIT License.
+By contributing, you agree that your contributions will be licensed under the
+MIT License.
 
 ## Recognition
 
 Contributors will be recognized in:
+
 - The project README
 - Release notes
 - CHANGELOG.md

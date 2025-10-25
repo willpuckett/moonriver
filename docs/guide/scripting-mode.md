@@ -1,6 +1,7 @@
 # Scripting Mode
 
-Moonriver can be used in non-interactive scripting mode for automation and integration with other tools.
+Moonriver can be used in non-interactive scripting mode for automation and
+integration with other tools.
 
 ## Basic Usage
 
@@ -31,8 +32,7 @@ Use commas to execute multiple commands:
 moonriver --host 192.168.1.100 --port 7125 "G28, M105, GET_POSITION"
 ```
 
-::: tip
-Quote the commands when using commas to prevent shell interpretation.
+::: tip Quote the commands when using commas to prevent shell interpretation.
 :::
 
 ## Shell Scripts
@@ -110,6 +110,7 @@ echo "Printer ready!"
 ```
 
 Usage:
+
 ```bash
 ./pre-print.sh printer.local 200 60
 ```
@@ -137,6 +138,7 @@ alias moon-status='moon STATUS'
 ```
 
 Usage:
+
 ```bash
 moon G28
 moon-home
@@ -199,6 +201,7 @@ prepare:
 ```
 
 Usage:
+
 ```bash
 make home
 make prepare
@@ -212,7 +215,7 @@ name: Test Printer
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: "0 0 * * *"
 
 jobs:
   test:
@@ -220,11 +223,11 @@ jobs:
     steps:
       - name: Install Moonriver
         run: cargo install moonriver
-      
+
       - name: Test Printer Connection
         run: |
           moonriver --host ${{ secrets.PRINTER_HOST }} --port 7125 STATUS
-      
+
       - name: Home Printer
         run: |
           moonriver --host ${{ secrets.PRINTER_HOST }} --port 7125 G28
@@ -271,4 +274,5 @@ moonriver --host printer.local --port 7125 G28 >> maintenance.log 2>&1
 
 - [Multiple Printers](/guide/multiple-printers) - Control many printers
 - [Configuration](/guide/configuration) - Advanced configuration
-- [Examples](https://github.com/yourusername/moonriver/tree/main/examples) - More script examples
+- [Examples](https://github.com/willpuckett/moonriver/tree/main/examples) - More
+  script examples

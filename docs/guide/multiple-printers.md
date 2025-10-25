@@ -1,10 +1,12 @@
 # Multiple Printers
 
-Moonriver is designed to work efficiently with multiple printers using tools like GNU Parallel.
+Moonriver is designed to work efficiently with multiple printers using tools
+like GNU Parallel.
 
 ## GNU Parallel
 
-[GNU Parallel](https://www.gnu.org/software/parallel/) is a shell tool for executing jobs in parallel.
+[GNU Parallel](https://www.gnu.org/software/parallel/) is a shell tool for
+executing jobs in parallel.
 
 ### Installation
 
@@ -252,6 +254,7 @@ parallel --tag moonriver --host {} --port 7125 M105 ::: printer{1..5}
 ```
 
 Output:
+
 ```
 printer1	T:20.5 /0.0 B:21.1 /0.0
 printer2	T:21.2 /0.0 B:20.8 /0.0
@@ -298,4 +301,5 @@ echo "All printers homed!"
 
 - [Scripting Mode](/guide/scripting-mode) - More automation examples
 - [Configuration](/guide/configuration) - Set up aliases
-- [Examples](https://github.com/yourusername/moonriver/tree/main/examples) - More scripts
+- [Examples](https://github.com/willpuckett/moonriver/tree/main/examples) - More
+  scripts

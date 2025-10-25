@@ -17,7 +17,7 @@ hero:
       link: /guide/quick-start
     - theme: alt
       text: View on GitHub
-      link: https://github.com/yourusername/moonriver
+      link: https://github.com/willpuckett/moonriver
 
 features:
   - icon: 🚀
@@ -77,7 +77,8 @@ parallel -j 0 moonriver --host {} --port 7125 G28 ::: printer1 printer2 printer3
 
 ## Why Moonriver?
 
-Moonriver brings the power of Klipper control directly to your terminal, perfect for:
+Moonriver brings the power of Klipper control directly to your terminal, perfect
+for:
 
 - **System Administrators**: Manage printers via SSH without a GUI
 - **Power Users**: Faster workflows with keyboard-driven interface
@@ -94,7 +95,7 @@ cargo install moonriver
 ```
 
 ```bash [From Source]
-git clone https://github.com/yourusername/moonriver.git
+git clone https://github.com/willpuckett/moonriver.git
 cd moonriver
 cargo build --release
 ```
@@ -107,10 +108,13 @@ cargo binstall moonriver
 
 ## Community
 
-- [GitHub Discussions](https://github.com/yourusername/moonriver/discussions) - Ask questions and share ideas
-- [Issue Tracker](https://github.com/yourusername/moonriver/issues) - Report bugs and request features
+- [GitHub Discussions](https://github.com/willpuckett/moonriver/discussions) -
+  Ask questions and share ideas
+- [Issue Tracker](https://github.com/willpuckett/moonriver/issues) - Report bugs
+  and request features
 - [Contributing Guide](/contributing/development) - Learn how to contribute
 
 ## License
 
-Moonriver is [MIT licensed](https://github.com/yourusername/moonriver/blob/main/LICENSE-MIT).
+Moonriver is
+[MIT licensed](https://github.com/willpuckett/moonriver/blob/main/LICENSE-MIT).
