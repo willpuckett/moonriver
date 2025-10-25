@@ -48,7 +48,7 @@ impl MoonrakerClient {
             while let Some(msg_result) = ws_read.next().await {
                 match msg_result {
                     Ok(Message::Text(text)) => {
-                        if let Err(e) = read_tx.send(text) {
+                        if let Err(e) = read_tx.send(text.to_string()) {
                             eprintln!("{}", format!("Error forwarding message: {}", e).red());
                             break;
                         }
@@ -106,7 +106,7 @@ impl MoonrakerClient {
 
     async fn send_raw(&self, message: &str) -> Result<()> {
         self.write
-            .send(Message::Text(message.to_string()))
+            .send(Message::Text(message.to_string().into()))
             .map_err(|e| anyhow!("Failed to send message: {}", e))?;
         Ok(())
     }

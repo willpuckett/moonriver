@@ -109,12 +109,15 @@ the command buffer and send an emergency stop signal to Klipper.
 
 ---
 
-## �💡 Installation
+## 💡 Installation
 
-_(This section is a placeholder. You will fill this in with instructions once
-Moonriver is ready for distribution.)_
+### **Homebrew (macOS)**
 
-### **From Source (Requires Rust/Cargo)**
+```bash
+brew install moonriver
+```
+
+### **From crates.io (Requires Rust/Cargo)**
 
 ```bash
 cargo install moonriver
@@ -124,6 +127,27 @@ cargo install moonriver
 
 ```bash
 cargo binstall moonriver
+```
+
+### **Debian/Ubuntu (.deb packages)**
+
+Download the appropriate `.deb` file from the [releases page](https://github.com/willpuckett/moonriver/releases):
+
+```bash
+# Download for your architecture (amd64 or arm64)
+wget https://github.com/willpuckett/moonriver/releases/latest/download/moonriver_VERSION_amd64.deb
+
+# Install
+sudo dpkg -i moonriver_VERSION_amd64.deb
+```
+
+### **From Source**
+
+```bash
+git clone https://github.com/willpuckett/moonriver.git
+cd moonriver
+cargo build --release
+sudo cp target/release/moonriver /usr/local/bin/
 ```
 
 ---

@@ -9,19 +9,35 @@ homepage = "https://moonriver.rs/"
 documentation = "https://moonriver.rs/"
 repository = "https://github.com/willpuckett/moonriver"
 license = "MIT"
-keywords = ["klipper", "moonraker", "3dprinting", "terminal", "repl"]
+keywords = ["klipper", "moonraker", "3dprinting", "3dp", "terminal", "repl"]
 categories = ["command-line-utilities"]
 exclude = ["docs/*", ".github/*", "target/*", "examples/*"]
 
 [dependencies]
-tokio = { version = "1.41", features = ["full"] }
-tokio-tungstenite = "0.24"
+tokio = { version = "1.48", features = ["full"] }
+tokio-tungstenite = "0.28"
 futures-util = "0.3"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 clap = { version = "4.5", features = ["derive"] }
-rustyline = "14.0"
-colored = "2.1"
+rustyline = "17.0"
+colored = "3.0"
 anyhow = "1.0"
 url = "2.5"
-dirs = "5.0"
+dirs = "6.0"
+
+[package.metadata.deb]
+maintainer = "Moonriver Contributors <contributors@moonriver.rs>"
+copyright = "2024-2025, Moonriver Contributors"
+license-file = ["LICENSE-MIT", "4"]
+extended-description = """\
+Moonriver is a terminal-based console for connecting to and interacting \
+with Klipper instances via the Moonraker WebSocket API. It provides both \
+interactive and scripting modes for 3D printer management."""
+depends = "$auto"
+section = "utility"
+priority = "optional"
+assets = [
+    ["target/release/moonriver", "usr/bin/", "755"],
+    ["README.md", "usr/share/doc/moonriver/README.md", "644"],
+]
