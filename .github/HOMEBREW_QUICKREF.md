@@ -92,15 +92,18 @@ brew log moonriver
 ## Troubleshooting
 
 ### Formula doesn't install
+
 - Verify SHA256 hash matches the tarball
 - Check that the URL is accessible
 - Ensure all Rust dependencies compile on macOS
 
 ### Audit fails
+
 - Run `brew audit --strict --online moonriver` for details
 - Common issues: wrong SHA256, invalid URL, missing test
 
 ### Build fails on Apple Silicon
+
 - Test on both Intel and M1/M2 Macs if possible
 - Ensure Rust dependencies support aarch64-apple-darwin
 
@@ -132,4 +135,5 @@ end
 
 - Formula Cookbook: https://docs.brew.sh/Formula-Cookbook
 - Acceptable Formulae: https://docs.brew.sh/Acceptable-Formulae
-- Contributing: https://github.com/Homebrew/homebrew-core/blob/master/CONTRIBUTING.md
+- Contributing:
+  https://github.com/Homebrew/homebrew-core/blob/master/CONTRIBUTING.md

@@ -131,7 +131,8 @@ cargo binstall moonriver
 
 ### **Debian/Ubuntu (.deb packages)**
 
-Download the appropriate `.deb` file from the [releases page](https://github.com/willpuckett/moonriver/releases):
+Download the appropriate `.deb` file from the
+[releases page](https://github.com/willpuckett/moonriver/releases):
 
 ```bash
 # Download for your architecture (amd64 or arm64)

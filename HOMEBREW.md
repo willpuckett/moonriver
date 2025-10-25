@@ -6,16 +6,19 @@ This document explains how to submit the Moonriver formula to Homebrew core.
 
 Before submitting to Homebrew core, ensure:
 
-1. **At least one stable release** - You need at least one tagged release (v0.1.0 or higher)
+1. **At least one stable release** - You need at least one tagged release
+   (v0.1.0 or higher)
 2. **The formula works** - Test it thoroughly on macOS
-3. **Notable project** - Homebrew core requires projects to be "notable" (have users, stars, activity)
+3. **Notable project** - Homebrew core requires projects to be "notable" (have
+   users, stars, activity)
 4. **No vendored dependencies** - All dependencies must be properly declared
 
 ## Preparing the Formula
 
 ### 1. Calculate the SHA256 Hash
 
-After creating a release (e.g., v0.1.0), calculate the SHA256 hash of the source tarball:
+After creating a release (e.g., v0.1.0), calculate the SHA256 hash of the source
+tarball:
 
 ```bash
 # Download the release tarball
@@ -28,10 +31,12 @@ shasum -a 256 moonriver-0.1.0.tar.gz
 ### 2. Update the Formula
 
 Edit `moonriver.rb` and replace:
+
 - `v0.1.0` with your actual release version
 - `PLACEHOLDER_SHA256_HASH` with the calculated SHA256 hash
 
 Example:
+
 ```ruby
 url "https://github.com/willpuckett/moonriver/archive/refs/tags/v0.2.0.tar.gz"
 sha256 "abc123def456..." # Your actual SHA256 hash
@@ -72,7 +77,7 @@ brew uninstall moonriver
    ```bash
    cd $(brew --repository homebrew/core)
    git checkout -b moonriver
-   
+
    # Copy your tested formula
    cp /path/to/moonriver.rb Formula/moonriver.rb
    ```
@@ -131,7 +136,7 @@ Your PR description should include:
 ```markdown
 ## moonriver 0.1.0 (new formula)
 
-A terminal-based console for connecting to and interacting with Klipper 
+A terminal-based console for connecting to and interacting with Klipper
 instances via the Moonraker WebSocket API.
 
 - Built with Rust
@@ -140,13 +145,14 @@ instances via the Moonraker WebSocket API.
 - Syntax highlighting for G-code
 - Scripting support
 
-**Homepage**: https://moonriver.rs/
-**Repository**: https://github.com/willpuckett/moonriver
+**Homepage**: https://moonriver.rs/ **Repository**:
+https://github.com/willpuckett/moonriver
 ```
 
 ## Homebrew Requirements Checklist
 
-- [ ] Formula follows Homebrew naming conventions (lowercase, no hyphens if possible)
+- [ ] Formula follows Homebrew naming conventions (lowercase, no hyphens if
+      possible)
 - [ ] SHA256 hash is correct
 - [ ] URL points to a stable release tarball
 - [ ] License is correctly specified
@@ -164,6 +170,7 @@ instances via the Moonraker WebSocket API.
 ### Build Failures
 
 If the build fails:
+
 1. Check that all Rust dependencies compile on macOS
 2. Ensure no system-specific dependencies are hardcoded
 3. Test on both Intel and Apple Silicon Macs if possible
@@ -171,6 +178,7 @@ If the build fails:
 ### Audit Failures
 
 Common audit issues:
+
 - Incorrect SHA256 hash
 - URL doesn't exist or isn't a release tarball
 - Missing license information
@@ -179,6 +187,7 @@ Common audit issues:
 ### Rejection Reasons
 
 Homebrew core might reject if:
+
 - Project is too new or not established
 - No stable release (pre-1.0 often rejected)
 - Duplicate functionality of existing formula
@@ -194,7 +203,8 @@ If you want users to install before/instead of homebrew-core submission:
 brew install willpuckett/tap/moonriver
 ```
 
-However, since you mentioned you don't want a tap, focus on getting into homebrew-core.
+However, since you mentioned you don't want a tap, focus on getting into
+homebrew-core.
 
 ## After Acceptance
 
@@ -253,6 +263,7 @@ brew install moonriver
 ## Timeline
 
 Typical timeline for homebrew-core PRs:
+
 - Initial review: 1-7 days
 - Revisions (if needed): varies
 - Acceptance: can take 1-4 weeks total
