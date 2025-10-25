@@ -7,6 +7,7 @@
 **Location**: `/docs/`
 
 **Features**:
+
 - ✅ Complete documentation structure
 - ✅ Home page with feature highlights
 - ✅ Getting Started guide
@@ -27,6 +28,7 @@
 - ✅ Navigation and sidebar
 
 **Build & Preview**:
+
 ```bash
 cd docs
 npm install
@@ -38,6 +40,7 @@ npm run docs:preview # Preview build
 ### 2. GitHub Actions Workflows
 
 **Documentation Deployment** (`.github/workflows/docs.yml`):
+
 - ✅ Deploys to GitHub Pages automatically
 - ✅ Triggers on push to `main` branch
 - ✅ Can be manually triggered
@@ -45,6 +48,7 @@ npm run docs:preview # Preview build
 - ✅ Caches dependencies for faster builds
 
 **crates.io Publishing** (`.github/workflows/publish.yml`):
+
 - ✅ Publishes to crates.io automatically
 - ✅ Triggers on GitHub releases
 - ✅ Can be manually triggered
@@ -54,6 +58,7 @@ npm run docs:preview # Preview build
 ### 3. Package Configuration
 
 **Cargo.toml Updates**:
+
 - ✅ Complete metadata for crates.io
 - ✅ Homepage URL
 - ✅ Documentation URL
@@ -67,6 +72,7 @@ npm run docs:preview # Preview build
 ### 4. Documentation Files
 
 **Created**:
+
 - ✅ `SETUP.md` - Complete setup guide for both features
 - ✅ `PUBLISHING.md` - Detailed publishing instructions
 - ✅ `docs/README.md` - Documentation development guide
@@ -86,18 +92,20 @@ npm run docs:preview # Preview build
 
 3. **View live site**:
    ```
-   https://willpuckett.github.io/moonriver/
+   https://moonriver.rs/
    ```
 
 ### Publish to crates.io
 
 #### Option 1: Manual
+
 ```bash
 cargo login
 cargo publish
 ```
 
 #### Option 2: Automated (Recommended)
+
 1. Add `CARGO_REGISTRY_TOKEN` to GitHub secrets
 2. Create a release on GitHub
 3. Workflow automatically publishes
@@ -147,10 +155,12 @@ moonriver/
 ## 🔧 Configuration Required
 
 ### For GitHub Pages
+
 - **Nothing!** Just push to main branch
 - GitHub Pages should be set to "GitHub Actions" source
 
 ### For crates.io Publishing
+
 1. Create crates.io account
 2. Generate API token
 3. Add `CARGO_REGISTRY_TOKEN` to GitHub secrets
@@ -160,12 +170,14 @@ moonriver/
 ## 📊 What's Next
 
 ### Immediate Actions
+
 1. **Enable GitHub Pages** in repository settings
 2. **Add crates.io token** to GitHub secrets
 3. **Push to main** to deploy docs
 4. **Create first release** to publish to crates.io
 
 ### Future Enhancements
+
 - Add more examples to documentation
 - Create video tutorials
 - Add troubleshooting section
@@ -185,6 +197,7 @@ All documentation is self-contained and comprehensive:
 ## 🎨 Design Features
 
 Documentation site includes:
+
 - 🎨 Clean, modern design
 - 📱 Mobile responsive
 - 🔍 Built-in search

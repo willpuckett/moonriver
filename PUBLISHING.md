@@ -45,6 +45,7 @@ cargo publish --dry-run
 ```
 
 This will:
+
 - Check that all files are included
 - Verify the package builds
 - Show what would be published
@@ -57,13 +58,13 @@ When ready:
 cargo publish
 ```
 
-::: warning
-Once published, a version cannot be deleted or modified! Make sure everything is correct.
-:::
+::: warning Once published, a version cannot be deleted or modified! Make sure
+everything is correct. :::
 
 ## Automated Publishing (GitHub Actions)
 
-The repository includes a GitHub Action that automatically publishes to crates.io when you create a release.
+The repository includes a GitHub Action that automatically publishes to
+crates.io when you create a release.
 
 ### Create a Release
 
@@ -95,6 +96,7 @@ The repository includes a GitHub Action that automatically publishes to crates.i
    - Click "Publish release"
 
 The GitHub Action will automatically:
+
 - Build the project
 - Run tests
 - Run clippy
@@ -117,6 +119,7 @@ Follow [Semantic Versioning](https://semver.org/):
 - **Patch** (0.0.1): Bug fixes, backwards compatible
 
 Examples:
+
 - `0.1.0` → `0.1.1`: Bug fix
 - `0.1.0` → `0.2.0`: New feature
 - `0.9.0` → `1.0.0`: Stable release
@@ -133,8 +136,8 @@ edition = "2021"
 authors = ["Moonriver Contributors"]
 description = "A terminal-based console for connecting to and interacting with Klipper instances via the Moonraker WebSocket API"
 readme = "README.md"
-homepage = "https://willpuckett.github.io/moonriver/"
-documentation = "https://willpuckett.github.io/moonriver/"
+homepage = "https://moonriver.rs/"
+documentation = "https://moonriver.rs/"
 repository = "https://github.com/willpuckett/moonriver"
 license = "MIT"
 keywords = ["klipper", "moonraker", "3dprinting", "terminal", "repl"]
@@ -144,6 +147,7 @@ categories = ["command-line-utilities"]
 ## What Gets Published
 
 Files included in the package:
+
 - ✅ `src/`
 - ✅ `Cargo.toml`
 - ✅ `README.md`
@@ -151,6 +155,7 @@ Files included in the package:
 - ✅ `CHANGELOG.md`
 
 Files excluded (see `Cargo.toml`):
+
 - ❌ `docs/`
 - ❌ `.github/`
 - ❌ `target/`
@@ -167,6 +172,7 @@ cargo search moonriver
 ```
 
 View on crates.io:
+
 ```
 https://crates.io/crates/moonriver
 ```
@@ -183,12 +189,14 @@ moonriver --version
 ### Update Documentation
 
 Update links in README and docs to point to:
+
 - crates.io page
 - docs.rs documentation
 
 ### Announce
 
 Announce the release:
+
 - GitHub Discussions
 - Reddit r/3Dprinting, r/klippers
 - Twitter/X
@@ -207,6 +215,7 @@ Ensure the repository URL in `Cargo.toml` is correct and public.
 ### "failed to verify"
 
 Check that:
+
 - All dependencies are specified correctly
 - No path dependencies (use version dependencies)
 - Code compiles: `cargo build --release`
@@ -214,6 +223,7 @@ Check that:
 ### "missing required fields"
 
 Ensure `Cargo.toml` has all required fields:
+
 - `description`
 - `license`
 - `repository`

@@ -1,6 +1,7 @@
 # Setup Guide for Moonriver
 
-This guide covers setting up Moonriver for both publishing to crates.io and deploying documentation to GitHub Pages.
+This guide covers setting up Moonriver for both publishing to crates.io and
+deploying documentation to GitHub Pages.
 
 ## Part 1: Publishing to crates.io
 
@@ -35,8 +36,8 @@ edition = "2021"
 authors = ["Moonriver Contributors"]
 description = "A terminal-based console for connecting to and interacting with Klipper instances via the Moonraker WebSocket API"
 readme = "README.md"
-homepage = "https://willpuckett.github.io/moonriver/"
-documentation = "https://willpuckett.github.io/moonriver/"
+homepage = "https://moonriver.rs/"
+documentation = "https://moonriver.rs/"
 repository = "https://github.com/willpuckett/moonriver"
 license = "MIT"
 keywords = ["klipper", "moonraker", "3dprinting", "terminal", "repl"]
@@ -106,6 +107,7 @@ The GitHub Action will automatically publish to crates.io!
 ### Step 2: Verify Workflow
 
 The workflow is already set up in `.github/workflows/docs.yml`. It will:
+
 - Trigger on pushes to `main` branch
 - Build the VitePress documentation
 - Deploy to GitHub Pages
@@ -127,8 +129,9 @@ git push origin main
 ### Step 5: Visit Your Documentation
 
 Your documentation will be available at:
+
 ```
-https://willpuckett.github.io/moonriver/
+https://moonriver.rs/
 ```
 
 ## Part 3: Testing Locally
@@ -193,44 +196,53 @@ cargo install --path .
 
 - **crates.io**: https://crates.io/crates/moonriver
 - **GitHub Actions**: https://github.com/willpuckett/moonriver/actions
-- **Documentation**: https://willpuckett.github.io/moonriver/
+- **Documentation**: https://moonriver.rs/
 
 ## Troubleshooting
 
 ### crates.io Publishing Fails
 
 **"crate name already exists"**
+
 - The name is taken, choose a different name
 
 **"repository not found"**
+
 - Ensure repository URL is correct and public
 
 **"missing required fields"**
+
 - Check all required fields in Cargo.toml
 
 ### GitHub Pages Not Updating
 
 **Check Actions Tab**
+
 - Look for errors in workflow runs
 - Ensure Pages is set to "GitHub Actions" source
 
 **Clear Cache**
+
 - Sometimes GitHub Pages caches aggressively
 - Try hard refresh: Ctrl+Shift+R (Cmd+Shift+R on Mac)
 
 **Check base URL**
+
 - Ensure `.vitepress/config.mts` has correct base path
 - Should be `/moonriver/` for username.github.io/moonriver
 
 ### Documentation Build Fails
 
 **Dead links**
+
 - Already configured to ignore with `ignoreDeadLinks: true`
 
 **Missing dependencies**
+
 - Run `npm install` in docs directory
 
 **Node version**
+
 - Ensure Node.js 18+ is installed
 
 ## Next Steps
