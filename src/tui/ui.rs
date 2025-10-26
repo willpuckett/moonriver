@@ -7,7 +7,7 @@ use ratatui::{
 };
 
 /// Render the TUI interface
-pub fn render(app: &App, frame: &mut Frame) {
+pub fn render(app: &mut App, frame: &mut Frame) {
     let chunks = Layout::default()
         .direction(Direction::Vertical)
         .constraints([
@@ -17,8 +17,9 @@ pub fn render(app: &App, frame: &mut Frame) {
         ])
         .split(frame.area());
 
-    // Render header
-    widgets::header::render(frame, chunks[0], app);
+    // Render header and capture power device click areas
+    let click_areas = widgets::header::render(frame, chunks[0], app);
+    app.power_device_click_areas = click_areas;
 
     // Render content based on current tab
     match app.current_tab {

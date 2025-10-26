@@ -148,6 +148,8 @@ pub struct App {
     pub client: Option<MoonrakerClient>,
     /// HTTP client for REST API calls
     pub http_client: reqwest::Client,
+    /// Power device click areas (stored after rendering)
+    pub power_device_click_areas: Vec<(ratatui::layout::Rect, String)>,
 }
 
 impl App {
@@ -181,6 +183,7 @@ impl App {
             printer: PrinterState::default(),
             client: None,
             http_client: reqwest::Client::new(),
+            power_device_click_areas: Vec::new(),
         }
     }
 
@@ -210,6 +213,22 @@ impl App {
     /// Handle mouse input
     fn handle_mouse(&mut self, mouse: crossterm::event::MouseEvent) -> crate::tui::Result<()> {
         use crossterm::event::{MouseButton, MouseEventKind};
+
+        // Handle power device clicks in header (row 0)
+        if mouse.row == 0 && mouse.kind == MouseEventKind::Down(MouseButton::Left) {
+            for (area, device_name) in &self.power_device_click_areas {
+                if mouse.column >= area.x 
+                    && mouse.column < area.x + area.width
+                    && mouse.row >= area.y
+                    && mouse.row < area.y + area.height
+                {
+                    // Toggle the power device
+                    let device_name = device_name.clone();
+                    self.pending_commands.push(format!("__TOGGLE_POWER__{}", device_name));
+                    return Ok(());
+                }
+            }
+        }
 
         // Handle mouse scroll for Jobs tab
         if self.current_tab == Tab::Jobs {
@@ -893,6 +912,14 @@ impl App {
                         format!("Error fetching jobs: {}", e)
                     ));
                 }
+            } else if self.pending_commands[i].starts_with("__TOGGLE_POWER__") {
+                let cmd = self.pending_commands.remove(i);
+                let device_name = cmd.strip_prefix("__TOGGLE_POWER__").unwrap_or("");
+                if let Err(e) = self.toggle_power_device(device_name).await {
+                    self.console_messages.push(ConsoleMessage::Error(
+                        format!("Error toggling power device: {}", e)
+                    ));
+                }
             } else {
                 i += 1;
             }
@@ -1070,6 +1097,98 @@ impl App {
             Err(e) => {
                 self.console_messages.push(ConsoleMessage::Error(
                     format!("Failed to start print: {}", e)
+                ));
+            }
+        }
+        
+        Ok(())
+    }
+    
+    /// Fetch power devices from Moonraker
+    pub async fn fetch_power_devices(&mut self) -> crate::tui::Result<()> {
+        let url = format!("{}/machine/device_power/devices", self.http_url);
+        
+        match self.http_client.get(&url).send().await {
+            Ok(response) => {
+                if let Ok(json) = response.json::<serde_json::Value>().await
+                    && let Some(result) = json.get("result")
+                    && let Some(devices) = result.get("devices").and_then(|d| d.as_array())
+                {
+                    let mut power_devices = Vec::new();
+                    
+                    for device in devices {
+                        let name = device.get("device")
+                            .and_then(|v| v.as_str())
+                            .unwrap_or("unknown")
+                            .to_string();
+                        
+                        let status = device.get("status")
+                            .and_then(|v| v.as_str())
+                            .unwrap_or("unknown")
+                            .to_string();
+                        
+                        let device_type = device.get("type")
+                            .and_then(|v| v.as_str())
+                            .unwrap_or("unknown")
+                            .to_string();
+                        
+                        let locked_while_printing = device.get("locked_while_printing")
+                            .and_then(|v| v.as_bool())
+                            .unwrap_or(false);
+                        
+                        power_devices.push(crate::tui::printer::PowerDevice {
+                            name,
+                            status,
+                            device_type,
+                            locked_while_printing,
+                        });
+                    }
+                    
+                    self.printer.power_devices = power_devices;
+                }
+            }
+            Err(e) => {
+                // Silently fail - not all printers have power devices configured
+                eprintln!("Failed to fetch power devices: {}", e);
+            }
+        }
+        
+        Ok(())
+    }
+    
+    /// Toggle a power device on/off
+    pub async fn toggle_power_device(&mut self, device_name: &str) -> crate::tui::Result<()> {
+        // Check if device is locked while printing
+        if let Some(device) = self.printer.power_devices.iter().find(|d| d.name == device_name)
+            && device.locked_while_printing && self.printer.print_stats.state == "printing"
+        {
+            self.console_messages.push(ConsoleMessage::Error(
+                format!("Device '{}' is locked while printing", device_name)
+            ));
+            return Ok(());
+        }
+        
+        let url = format!("{}/machine/device_power/device", self.http_url);
+        let body = serde_json::json!({
+            "device": device_name,
+            "action": "toggle"
+        });
+        
+        match self.http_client.post(&url).json(&body).send().await {
+            Ok(response) => {
+                if let Ok(json) = response.json::<serde_json::Value>().await
+                    && let Some(result) = json.get("result")
+                    && let Some(new_status) = result.get(device_name).and_then(|v| v.as_str())
+                {
+                    // Update the device status in our state
+                    if let Some(device) = self.printer.power_devices.iter_mut().find(|d| d.name == device_name) {
+                        device.status = new_status.to_string();
+                    }
+                }
+            }
+            Err(e) => {
+                self.console_messages.push(ConsoleMessage::Error(
+                    format!("Failed to toggle power device: {}", e)
                 ));
             }
         }

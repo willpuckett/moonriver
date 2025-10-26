@@ -57,6 +57,10 @@ async fn main() -> Result<()> {
     match moonraker::MoonrakerClient::connect(&url).await {
         Ok(client) => {
             app.set_client(client);
+            // Fetch power devices after connection
+            if let Err(e) = app.fetch_power_devices().await {
+                eprintln!("Warning: Failed to fetch power devices: {}", e);
+            }
         }
         Err(e) => {
             eprintln!("Warning: Failed to connect to Moonraker: {}", e);

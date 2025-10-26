@@ -27,6 +27,16 @@ impl Default for PrintJob {
     }
 }
 
+/// Power device state
+#[derive(Debug, Clone)]
+pub struct PowerDevice {
+    pub name: String,
+    pub status: String, // on, off, init, error
+    #[allow(dead_code)]
+    pub device_type: String,
+    pub locked_while_printing: bool,
+}
+
 /// Printer connection and state information
 #[derive(Debug, Clone)]
 pub struct PrinterState {
@@ -35,6 +45,7 @@ pub struct PrinterState {
     pub temperatures: Temperatures,
     pub toolhead: Toolhead,
     pub print_stats: PrintStats,
+    pub power_devices: Vec<PowerDevice>,
 }
 
 impl Default for PrinterState {
@@ -45,6 +56,7 @@ impl Default for PrinterState {
             temperatures: Temperatures::default(),
             toolhead: Toolhead::default(),
             print_stats: PrintStats::default(),
+            power_devices: Vec::new(),
         }
     }
 }
