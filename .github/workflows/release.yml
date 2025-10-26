@@ -110,13 +110,14 @@ jobs:
           7z a ${{ matrix.asset_name }}.zip ${{ matrix.artifact_name }}
           mv ${{ matrix.asset_name }}.zip ../../..
 
-      - name: Upload Release Asset
-        uses: softprops/action-gh-release@v2
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
         with:
-          files: |
+          name: binary-${{ matrix.target }}
+          path: |
             ${{ matrix.asset_name }}.tar.gz
             ${{ matrix.asset_name }}.zip
-          fail_on_unmatched_files: false
+          retention-days: 1
 
   build-deb:
     name: Build Debian Package for ${{ matrix.target }}
@@ -163,19 +164,28 @@ jobs:
           echo "deb_path=$DEB_PATH" >> $GITHUB_OUTPUT
           echo "deb_name=$DEB_NAME" >> $GITHUB_OUTPUT
 
-      - name: Upload Release Asset
-        uses: softprops/action-gh-release@v2
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
         with:
-          files: ${{ steps.find_deb.outputs.deb_path }}
+          name: deb-${{ matrix.target }}
+          path: ${{ steps.find_deb.outputs.deb_path }}
+          retention-days: 1
 
   create-release:
     name: Create Release with Changelog
     needs: [changelog, build-binaries, build-deb]
     runs-on: ubuntu-latest
     steps:
-      - name: Create Release
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - name: Create and Publish Release
         uses: softprops/action-gh-release@v2
         with:
           body: ${{ needs.changelog.outputs.release_body }}
           draft: false
           prerelease: false
+          files: artifacts/**/*
