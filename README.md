@@ -9,7 +9,10 @@ instances via the **Moonraker** WebSocket API.
 control your 3D printer, all from the comfort of your command line. Built
 entirely in **Rust** for speed and reliability.
 
-In the tradition of [klipper-repl](https://github.com/Annex-Engineering/klipper_estimator) and [krui](https://github.com/ballaswag/krui), Moonriver brings command-line control to Klipper 3D printers.
+In the tradition of
+[klipper-repl](https://github.com/Annex-Engineering/klipper_estimator) and
+[krui](https://github.com/ballaswag/krui), Moonriver brings command-line control
+to Klipper 3D printers.
 
 ---
 
@@ -27,23 +30,26 @@ Loop (REPL).
   characteristics for a fast, low-latency experience
 - **Simple Configuration** — Easily configure the Moonraker host address and API
   key via a simple configuration file or command-line arguments
-- **Automatic Reconnection** — Reconnects automatically if Klipper restarts or is unavailable
+- **Automatic Reconnection** — Reconnects automatically if Klipper restarts or
+  is unavailable
 - **Scripting Support** — Run commands non-interactively for automation
-- **Multiple Commands** — Execute multiple G-Code commands per line using `,` as a separator
+- **Multiple Commands** — Execute multiple G-Code commands per line using `,` as
+  a separator
 - **Tab Autocompletion** — Tab completion for user-defined macros
 - **Multiple Printers** — Control multiple printers via
   [GNU Parallel](https://www.gnu.org/software/parallel/)
 
 ### 💻 Terminal Experience
 
-- **Rich Terminal Coloring** — Color-coded output categorizes different types
-  of information (green for G-code responses, yellow for warnings, red for
-  errors) for easy readability at a glance
+- **Rich Terminal Coloring** — Color-coded output categorizes different types of
+  information (green for G-code responses, yellow for warnings, red for errors)
+  for easy readability at a glance
 - **Interactive Command Line** — Familiar, interactive command-line interface
   for sending commands
-- **Command History** — Access and reuse previous commands using the up and
-  down arrow keys
-- **Syntax Highlighting** — Syntax highlighting for both G-Code and user-defined macros
+- **Command History** — Access and reuse previous commands using the up and down
+  arrow keys
+- **Syntax Highlighting** — Syntax highlighting for both G-Code and user-defined
+  macros
 
 ### 🖨️ Klipper & Printer Control
 
