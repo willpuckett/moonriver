@@ -206,7 +206,7 @@ pub fn get_temp_bounds(area: Rect, app: &crate::tui::app::App) -> Vec<(TempBarEl
     // Match the actual terminal rendering width more accurately
     let text_width = |text: &str| -> u16 {
         // Use unicode-width crate's approach if available, otherwise fallback
-        let width = text.chars().map(|c| {
+        text.chars().map(|c| {
             match c {
                 // ASCII characters are always 1 width
                 c if c.is_ascii() => 1,
@@ -219,9 +219,7 @@ pub fn get_temp_bounds(area: Rect, app: &crate::tui::app::App) -> Vec<(TempBarEl
                 // Other non-ASCII default to 1 for now
                 _ => 1,
             }
-        }).sum::<u16>();
-        
-        width
+        }).sum::<u16>()
     };
     
     // "🌡 " = 2 chars (emoji + space)
