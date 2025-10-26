@@ -203,31 +203,49 @@ pub fn get_temp_bounds(area: Rect, app: &crate::tui::app::App) -> Vec<(TempBarEl
     let mut x = area.x;
     
     // Helper function to measure text width
+    // Match the actual terminal rendering width more accurately
     let text_width = |text: &str| -> u16 {
-        text.chars().map(|c| if c.is_ascii() { 1 } else { 2 }).sum::<usize>() as u16
+        // Use unicode-width crate's approach if available, otherwise fallback
+        let width = text.chars().map(|c| {
+            match c {
+                // ASCII characters are always 1 width
+                c if c.is_ascii() => 1,
+                // Degree symbol specifically
+                '°' => 1,
+                // Common Greek letters used in electronics
+                'μ' => 1,
+                // Emojis - let's try 2-width to see if that fixes the offset
+                '🌡' | '🛌' | '🌀' => 2,
+                // Other non-ASCII default to 1 for now
+                _ => 1,
+            }
+        }).sum::<u16>();
+        
+        width
     };
     
-    // "🌡 " = 3 chars (emoji takes 2)
+    // "🌡 " = 2 chars (emoji + space)
     x += text_width("🌡 ");
     
-    // Extruder section - build the actual text that will be rendered
+    // Extruder section - calculate width component by component to match rendering
     let extruder_start = x;
     let editing_extruder = app.temp_edit_target == Some(crate::tui::app::TempEditTarget::Extruder) 
         && app.temp_input.mode == crate::tui::app::InputMode::Editing;
     
-    let extruder_text = if editing_extruder {
-        format!("E:{:.1}°/[{}°]", 
-            app.printer.temperatures.extruder.temperature,
-            if app.temp_input.value.is_empty() { "_" } else { &app.temp_input.value }
-        )
+    // Calculate width by adding up each rendered span:
+    // Span 1: "E:"
+    let mut extruder_width = text_width("E:");
+    // Span 2: current temp with degree
+    extruder_width += text_width(&format!("{:.1}°", app.printer.temperatures.extruder.temperature));
+    // Span 3: "/"
+    extruder_width += text_width("/");
+    // Span 4: target temp or input
+    if editing_extruder {
+        extruder_width += text_width(&format!("[{}°]", if app.temp_input.value.is_empty() { "_" } else { &app.temp_input.value }));
     } else {
-        format!("E:{:.1}°/{:.0}°", 
-            app.printer.temperatures.extruder.temperature,
-            app.printer.temperatures.extruder.target
-        )
-    };
+        extruder_width += text_width(&format!("{:.0}°", app.printer.temperatures.extruder.target));
+    }
     
-    let extruder_width = text_width(&extruder_text);
     x += extruder_width;
     
     bounds.push((
@@ -240,25 +258,26 @@ pub fn get_temp_bounds(area: Rect, app: &crate::tui::app::App) -> Vec<(TempBarEl
         },
     ));
     
-    // Bed section
-    x += text_width("  "); // spacing
+    // Bed section - calculate width component by component to match rendering
+    x += text_width("  "); // spacing (rendered as separate span)
     let bed_start = x;
     let editing_bed = app.temp_edit_target == Some(crate::tui::app::TempEditTarget::Bed) 
         && app.temp_input.mode == crate::tui::app::InputMode::Editing;
     
-    let bed_text = if editing_bed {
-        format!("🛌{:.1}°/[{}°]", 
-            app.printer.temperatures.bed.temperature,
-            if app.temp_input.value.is_empty() { "_" } else { &app.temp_input.value }
-        )
+    // Calculate width by adding up each rendered span:
+    // Span 1: "🛌"
+    let mut bed_width = text_width("🛌");
+    // Span 2: current temp with degree
+    bed_width += text_width(&format!("{:.1}°", app.printer.temperatures.bed.temperature));
+    // Span 3: "/"
+    bed_width += text_width("/");
+    // Span 4: target temp or input
+    if editing_bed {
+        bed_width += text_width(&format!("[{}°]", if app.temp_input.value.is_empty() { "_" } else { &app.temp_input.value }));
     } else {
-        format!("🛌{:.1}°/{:.0}°", 
-            app.printer.temperatures.bed.temperature,
-            app.printer.temperatures.bed.target
-        )
-    };
+        bed_width += text_width(&format!("{:.0}°", app.printer.temperatures.bed.target));
+    }
     
-    let bed_width = text_width(&bed_text);
     x += bed_width;
     
     bounds.push((
@@ -273,52 +292,58 @@ pub fn get_temp_bounds(area: Rect, app: &crate::tui::app::App) -> Vec<(TempBarEl
     
     // Chamber temperature (if available)
     if let Some(chamber) = &app.printer.temperatures.chamber {
-        let chamber_text = format!("  C:{:.1}°/{:.0}°", chamber.temperature, chamber.target);
-        x += text_width(&chamber_text);
+        // Calculate width by adding up each rendered span:
+        x += text_width("  "); // spacing
+        x += text_width("C:"); // label
+        x += text_width(&format!("{:.1}°", chamber.temperature)); // current temp
+        x += text_width(&format!("/{:.0}°", chamber.target)); // separator + target
     }
     
     // MCU temperatures (if available)
     for mcu in &app.printer.temperatures.mcus {
-        let mcu_text = format!("  μC:{:.1}°", mcu.temperature);
-        x += text_width(&mcu_text);
+        // Match the actual rendering: spacing + label + temperature as separate parts
+        x += text_width("  "); // spacing
+        x += text_width("μC:"); // label 
+        x += text_width(&format!("{:.1}°", mcu.temperature)); // temperature
     }
     
     // Fan speeds (if available) - make them clickable
     for (fan_idx, fan) in app.printer.temperatures.fans.iter().enumerate() {
-        // Account for spacing before fan (rendered as separate span)
+        // Account for spacing before fan (rendered as separate span: "  ")
         x += text_width("  ");
         
-        // The clickable area starts with the emoji
+        // The clickable area starts with the emoji span
         let fan_start = x;
         
         let editing_fan = app.fan_edit_target
             .map(|target| target.index == fan_idx)
             .unwrap_or(false) && app.fan_input.mode == crate::tui::app::InputMode::Editing;
         
-        // Build the text exactly as rendered: emoji + percentage (+ optionally rpm)
+        // Build the combined text just like we do for bed
         let fan_text = if editing_fan {
             format!("🌀[{}%]", 
                 if app.fan_input.value.is_empty() { "_" } else { &app.fan_input.value }
             )
         } else {
             let percent = (fan.speed * 100.0) as u8;
-            let base = format!("🌀{}%", percent);
+            let mut text = format!("🌀{}%", percent);
+            
+            // Add RPM if available
             if let Some(rpm) = fan.rpm {
-                format!("{}({:.0}rpm)", base, rpm)
-            } else {
-                base
+                text.push_str(&format!("({:.0}rpm)", rpm));
             }
+            text
         };
         
-        let fan_width = text_width(&fan_text);
-        x += fan_width; // Move x to end of this fan's text
+        let fan_total_width = text_width(&fan_text);
+        x += fan_total_width;
         
         bounds.push((
             TempBarElement::Fan(fan_idx),
             Rect {
                 x: fan_start,
                 y,
-                width: fan_width,
+                width: fan_total_width,
                 height: 1,
             },
         ));
