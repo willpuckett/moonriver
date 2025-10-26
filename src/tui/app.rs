@@ -136,6 +136,7 @@ pub struct App {
     /// Print job history
     pub job_list: StatefulList<PrintJob>,
     /// Configuration
+    #[allow(dead_code)]
     pub config: Config,
     /// Server URL
     pub server_url: String,
@@ -1050,6 +1051,7 @@ impl App {
     }
     
     /// Start a print job
+    #[allow(dead_code)]
     pub async fn start_print_job(&mut self, filename: &str) -> crate::tui::Result<()> {
         let url = format!("{}/printer/print/start", self.http_url);
         let body = serde_json::json!({

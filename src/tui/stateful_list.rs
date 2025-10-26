@@ -60,6 +60,7 @@ impl<T> StatefulList<T> {
         self.state.select(Some(i));
     }
 
+    #[allow(dead_code)]
     pub fn select(&mut self, index: Option<usize>) {
         self.state.select(index);
     }
@@ -68,6 +69,7 @@ impl<T> StatefulList<T> {
         self.state.selected().and_then(|i| self.items.get(i))
     }
 
+    #[allow(dead_code)]
     pub fn unselect(&mut self) {
         self.state.select(None);
     }

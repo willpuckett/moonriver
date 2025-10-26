@@ -1,10 +1,12 @@
-/// Placeholder for modal dialog system
-/// Will be implemented when needed for temperature input, print confirmation, etc.
+//! Placeholder for modal dialog system
+//! Will be implemented when needed for temperature input, print confirmation, etc.
+
+#![allow(dead_code)]
 
 use ratatui::{
     layout::{Alignment, Constraint, Direction, Layout, Rect},
-    style::{Color, Modifier, Style},
-    text::{Line, Span},
+    style::{Color, Style},
+    text::Line,
     widgets::{Block, Borders, Clear, Paragraph},
     Frame,
 };

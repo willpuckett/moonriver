@@ -274,6 +274,7 @@ pub fn get_footer_bounds(area: Rect, current_tab: Tab) -> Vec<(FooterAction, Rec
 
 /// Calculate the bounds for each tab button (deprecated, use get_footer_bounds instead)
 /// Returns a vector of (Tab, Rect) tuples representing clickable areas
+#[allow(dead_code)]
 pub fn get_tab_bounds(area: Rect) -> Vec<(Tab, Rect)> {
     let mut bounds = Vec::new();
     let y = area.y;

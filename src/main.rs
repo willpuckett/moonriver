@@ -41,7 +41,7 @@ async fn main() -> Result<()> {
 
     // If REPL mode is explicitly requested
     if cli.repl {
-        let mut client = moonraker::MoonrakerClient::connect(&url).await?;
+        let client = moonraker::MoonrakerClient::connect(&url).await?;
         repl::run_repl(client).await?;
         return Ok(());
     }

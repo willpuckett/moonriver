@@ -7,6 +7,7 @@ use ratatui::{
     Frame,
 };
 
+#[allow(dead_code)]
 pub fn render(frame: &mut Frame, area: Rect, app: &App) {
     let block = Block::default()
         .title(" System Info ")
@@ -182,6 +183,7 @@ pub fn render(frame: &mut Frame, area: Rect, app: &App) {
     frame.render_widget(right_para, columns[1]);
 }
 
+#[allow(dead_code)]
 fn format_duration(seconds: f64) -> String {
     let secs = seconds as u64;
     let hours = secs / 3600;

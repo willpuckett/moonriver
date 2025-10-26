@@ -1,7 +1,6 @@
-use serde::{Deserialize, Serialize};
-
 /// Print job from history
 #[derive(Debug, Clone)]
+#[allow(dead_code)]
 pub struct PrintJob {
     pub job_id: String,
     pub filename: String,
@@ -88,6 +87,7 @@ pub struct HeaterState {
 pub struct Toolhead {
     pub position: [f64; 4], // X, Y, Z, E
     pub homed_axes: Vec<String>,
+    #[allow(dead_code)]
     pub print_time: f64,
 }
 

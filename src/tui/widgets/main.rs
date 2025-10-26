@@ -8,6 +8,7 @@ use ratatui::{
     Frame,
 };
 
+#[allow(dead_code)]
 pub fn render(frame: &mut Frame, area: Rect, app: &App) {
     // Calculate dynamic constraints based on panel visibility
     let mut constraints = vec![];

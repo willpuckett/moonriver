@@ -13,6 +13,7 @@ pub enum Tab {
 
 impl Tab {
     /// Get the key binding for this tab
+    #[allow(dead_code)]
     pub fn key(&self) -> char {
         match self {
             Tab::Console => 'c',
@@ -44,6 +45,7 @@ impl Tab {
     }
 
     /// Get all tabs in order
+    #[allow(dead_code)]
     pub fn all() -> &'static [Tab] {
         &[Tab::Console, Tab::Position, Tab::Jobs, Tab::Help]
     }
