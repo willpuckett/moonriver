@@ -1,7 +1,8 @@
 /// Available tabs in the TUI
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum Tab {
     /// GCode console/REPL (press 'c')
+    #[default]
     Console,
     /// Toolhead position and homing controls (press 'p')
     Position,
@@ -48,11 +49,5 @@ impl Tab {
     #[allow(dead_code)]
     pub fn all() -> &'static [Tab] {
         &[Tab::Console, Tab::Position, Tab::Jobs, Tab::Help]
-    }
-}
-
-impl Default for Tab {
-    fn default() -> Self {
-        Tab::Console
     }
 }

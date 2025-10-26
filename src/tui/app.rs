@@ -531,12 +531,11 @@ impl App {
                 self.current_tab = tab;
                 
                 // Fetch jobs when switching to Jobs tab
-                if self.current_tab == Tab::Jobs && old_tab != Tab::Jobs {
-                    if self.client.is_some() {
+                if self.current_tab == Tab::Jobs && old_tab != Tab::Jobs
+                    && self.client.is_some() {
                         // Queue job fetch
                         self.pending_commands.push("__FETCH_JOBS__".to_string());
                     }
-                }
                 
                 return Ok(());
             }
@@ -685,7 +684,7 @@ impl App {
             KeyCode::Enter => {
                 // Parse and set temperature
                 if let Ok(temp) = self.temp_input.value.trim().parse::<f64>() {
-                    if temp >= 0.0 && temp <= 300.0 {
+                    if (0.0..=300.0).contains(&temp) {
                         let gcode = match self.temp_edit_target {
                             Some(TempEditTarget::Extruder) => format!("M104 S{}", temp as u32),
                             Some(TempEditTarget::Bed) => format!("M140 S{}", temp as u32),
