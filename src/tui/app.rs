@@ -719,31 +719,42 @@ impl App {
                         };
                         
                         if !gcode.is_empty() {
-                            self.console_messages.push(ConsoleMessage::Command(gcode.clone()));
+                            self.add_console_message(ConsoleMessage::Command(gcode.clone()));
                             
                             if self.client.is_some() {
+                                // Optimistically update local state for immediate UI feedback
+                                match self.temp_edit_target {
+                                    Some(TempEditTarget::Extruder) => {
+                                        self.printer.temperatures.extruder.target = temp;
+                                    }
+                                    Some(TempEditTarget::Bed) => {
+                                        self.printer.temperatures.bed.target = temp;
+                                    }
+                                    None => {}
+                                }
+                                
                                 self.pending_commands.push(gcode);
                                 let heater_name = match self.temp_edit_target {
                                     Some(TempEditTarget::Extruder) => "Extruder",
                                     Some(TempEditTarget::Bed) => "Bed",
                                     None => "",
                                 };
-                                self.console_messages.push(ConsoleMessage::Info(
+                                self.add_console_message(ConsoleMessage::Info(
                                     format!("{} target set to {}°C", heater_name, temp as u32)
                                 ));
                             } else {
-                                self.console_messages.push(ConsoleMessage::Error(
+                                self.add_console_message(ConsoleMessage::Error(
                                     "Not connected to printer".to_string()
                                 ));
                             }
                         }
                     } else {
-                        self.console_messages.push(ConsoleMessage::Error(
+                        self.add_console_message(ConsoleMessage::Error(
                             "Temperature must be between 0 and 300°C".to_string()
                         ));
                     }
                 } else {
-                    self.console_messages.push(ConsoleMessage::Error(
+                    self.add_console_message(ConsoleMessage::Error(
                         "Invalid temperature value".to_string()
                     ));
                 }
