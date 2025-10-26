@@ -232,7 +232,11 @@ pub fn format_response(response: &str) {
         // Handle JSON-RPC response
         if let Some(result) = value.get("result") {
             if result.is_string() {
-                println!("{}", result.as_str().unwrap().green());
+                let result_str = result.as_str().unwrap();
+                // Skip standalone "ok" responses
+                if result_str.trim() != "ok" && !result_str.trim().is_empty() {
+                    println!("{}", result_str.green());
+                }
             } else {
                 println!("{}", serde_json::to_string_pretty(&result).unwrap().green());
             }
@@ -244,13 +248,17 @@ pub fn format_response(response: &str) {
                 if let Some(params) = value.get("params").and_then(|p| p.get(0)) {
                     let msg = params.as_str().unwrap_or("");
 
+                    // Skip standalone "ok" messages (with or without whitespace)
+                    let trimmed = msg.trim();
+                    if trimmed == "ok" || trimmed.is_empty() {
+                        return;
+                    }
+
                     // Color code based on content
                     if msg.contains("error") || msg.contains("!!") {
                         println!("{}", msg.red().bold());
                     } else if msg.contains("warning") || msg.contains("//") {
                         println!("{}", msg.yellow());
-                    } else if msg.starts_with("ok") {
-                        println!("{}", msg.green());
                     } else {
                         println!("{}", msg.cyan());
                     }
