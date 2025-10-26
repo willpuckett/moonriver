@@ -9,7 +9,7 @@ homepage = "https://moonriver.rs/"
 documentation = "https://moonriver.rs/"
 repository = "https://github.com/willpuckett/moonriver"
 license = "MIT"
-keywords = ["klipper", "moonraker", "3dprinting", "3dp", "terminal", "repl"]
+keywords = ["klipper", "moonraker", "3dprinting", "3dp", "tui"]
 categories = ["command-line-utilities"]
 exclude = ["docs/*", ".github/*", "target/*", "examples/*"]
 
