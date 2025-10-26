@@ -89,8 +89,9 @@ G28 Z            # Home Z only
 ## Toggle Visibility
 
 Control position bar visibility:
-- **`p` key** — Toggle position bar on/off
-- **Mouse** — Click on the Position tab in the footer
+- **`l` key** — Toggle **L**ocation bar on/off (globally across all tabs)
+- **`p` key** — Switch to **P**osition tab
+- **Mouse** — Click on tabs in the footer to switch views
 
 The position bar appears at the top of all tabs when visible:
 - Main Dashboard

@@ -63,6 +63,28 @@ Click on /210° → Type "250" → Press Enter
 Sends: M104 S250
 ```
 
+### Click to Set Fan Speed
+
+Click on any fan speed percentage to edit it:
+
+1. **Click** on the fan speed (e.g., `🌀75%`)
+2. **Type** the new speed percentage (0-100)
+3. **Press Enter** to apply the change
+4. **Press Escape** to cancel
+
+Example:
+```
+Click on 🌀75% → Type "50" → Press Enter
+Sends: M106 S127 (for part fan)
+or SET_FAN_SPEED FAN=name SPEED=0.50 (for named fans)
+```
+
+The fan speed updates immediately in the UI for responsive feedback, while the command is sent to the printer.
+
+### Exclusive Editing
+
+Only one temperature or fan speed can be edited at a time. Clicking on a new item automatically cancels any current edit, preventing confusion.
+
 ### Keyboard Shortcuts
 
 When editing a temperature:
@@ -71,11 +93,17 @@ When editing a temperature:
 - **Enter** — Apply the change and send G-code
 - **Escape** — Cancel editing
 
+When editing a fan speed:
+- **0-9** — Enter digits (0-100 for percentage)
+- **Backspace** — Delete last digit
+- **Enter** — Apply the change and send G-code
+- **Escape** — Cancel editing
+
 ### Visual Feedback
 
-When editing, the target temperature is shown in brackets with yellow highlighting:
+When editing, the value is shown in brackets with yellow highlighting:
 ```
-🌡 E:210.5°/[250°]  🛌60.0°/60°
+🌡 E:210.5°/[250°]  🛌60.0°/60°  🌀[50%]
 ```
 
 ## Temperature Commands
@@ -104,7 +132,7 @@ M105         # Report all temperatures
 ## Toggle Visibility
 
 Control temperature bar visibility:
-- **`t` key** — Toggle temperature bar on/off
+- **`t` key** — Toggle **T**emperature bar on/off (globally across all tabs)
 - **Mouse** — Click on tabs in the footer to switch views
 
 The temperature bar appears at the top of all tabs when visible:
@@ -129,28 +157,47 @@ Error: Temperature must be between 0 and 300°C
 
 ### MCU Temperature
 
-Shows the microcontroller temperature (if configured):
+Shows the microcontroller and additional temperature sensors (dynamically discovered):
 ```
-μC:42.3°
+μC:42.3°  HOST:38.5°  Chamber:45.2°
 ```
+
+Moonriver automatically discovers and subscribes to:
+- MCU temperature sensors
+- Host (Raspberry Pi) temperature
+- Custom temperature sensors (e.g., `temperature_sensor chamber`)
+- Temperature fans
 
 This is useful for monitoring:
 - Controller board temperature
 - Ambient temperature inside electronics enclosure
+- Chamber temperature for materials like ABS
 - Detecting cooling issues
 
 ### Fan Status
 
 Shows fan speed and RPM (if tachometer is connected):
 ```
-🌀75%(3500rpm)
+🌀Part:75%(3500rpm)  Hotend:100%  Chamber:50%
 ```
 
-Multiple fans are displayed if configured:
-- Part cooling fan
+Multiple fans are automatically discovered and displayed:
+- Part cooling fan (labeled "Part")
 - Hotend fan
 - Controller fan
-- Exhaust fan
+- Temperature-controlled fans
+- Custom fans
+
+Each fan's speed is individually clickable for control.
+
+### Dynamic Sensor Discovery
+
+Moonriver uses Moonraker's `printer.objects.list` API to automatically discover all available:
+- Temperature sensors (including custom ones)
+- Fans (part cooling, heater fans, controller fans)
+- MCU temperature sensors
+
+No manual configuration needed - if it's in your `printer.cfg`, it will appear in Moonriver!
 
 ## Real-Time Updates
 

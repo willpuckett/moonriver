@@ -1,58 +1,64 @@
-# Job History Browser
+# Job Browser
 
-The Job History Browser allows you to view your print history and start new print jobs directly from the TUI interface.
+The Job Browser allows you to view available G-code files and start new print jobs directly from the TUI interface.
 
 ## Features
 
-### View Print History
-- Browse through up to 50 recent print jobs
-- See job status at a glance (completed ✓, failed ✗, cancelled ✗)
-- View print duration, filament used, and completion time
-- Automatic refresh when entering the Jobs tab
+### Browse Available Files
+- View all .gcode files in your printer's gcodes directory
+- Scroll through the file list with mouse wheel or arrow keys
+- Click on files to select them
+- See file metadata including estimated print time and filament usage
+- Automatic file list refresh when entering the Jobs tab
 
 ### Start Print Jobs
-- Select any completed job from history
-- Press Enter to start a new print with the same file
+- Select any G-code file from the list
+- Press Enter or click to start a print
 - Real-time feedback in the console
 
-### Job Information Display
-Each job entry shows:
-- **Status Icon**: Visual indicator (✓ for completed, ✗ for failed/cancelled)
+### File Information Display
+Each file entry shows:
 - **Filename**: Name of the G-code file
-- **Duration**: Total print time (hours, minutes, seconds)
-- **Filament Used**: Amount of filament consumed (in mm)
-- **Completion Time**: Date and time when the job finished
+- **Estimated Time**: Predicted print duration (if available in file metadata)
+- **Filament**: Estimated filament usage (if available in file metadata)
+
+## Mouse Controls
+
+| Action | Result |
+|--------|--------|
+| **Scroll wheel** | Navigate through file list |
+| **Click on file** | Select file |
+| **Enter key** | Start print with selected file |
 
 ## Keyboard Controls
 
 | Key | Action |
 |-----|--------|
 | `j` | Switch to Jobs tab |
-| `↑` / `↓` | Navigate through job list |
-| `j` / `k` | Alternative navigation (vim-style) |
-| `Enter` | Start print with selected job |
-| `r` | Refresh job list |
+| `↑` / `↓` | Navigate through file list |
+| `PageUp` / `PageDown` | Scroll by page |
+| `Home` / `End` | Jump to top/bottom of list |
+| `Enter` | Start print with selected file |
+| `c` | Switch to Console tab |
+| `p` | Switch to Position tab |
 | `m` | Return to Main dashboard |
 | `q` | Quit application |
 
 ## Usage
 
-### Viewing Job History
+### Viewing Available Files
 
 1. Press `j` to open the Jobs tab
-2. The job list automatically fetches when you enter the tab
-3. Use arrow keys or `j`/`k` to navigate through the list
-4. Selected job is highlighted with a `▶` indicator
+2. The file list automatically fetches when you enter the tab
+3. Use mouse scroll wheel or arrow keys to navigate through the list
+4. Selected file is highlighted
 
 ### Starting a Print Job
 
-1. Navigate to the desired job using arrow keys
+1. Navigate to the desired file using mouse or arrow keys
 2. Press `Enter` to start the print
 3. Check the console (press `c`) for confirmation
-
-### Refreshing the List
-
-Press `r` at any time while on the Jobs tab to fetch the latest job history from Moonraker.
+4. Monitor progress on the main dashboard (press `m`)
 
 ## States
 
@@ -60,36 +66,34 @@ Press `r` at any time while on the Jobs tab to fetch the latest job history from
 When not connected to a printer, the Jobs tab displays:
 ```
 Not connected to printer
-Connect to view job history
+Connect to view available print files
 ```
 
-### Empty History
-If no jobs have been printed yet:
+### No Files
+If no G-code files are found:
 ```
-No print jobs found
-Job history will appear here once you start printing
+No print files found
+Upload .gcode files to your printer's gcodes directory
 ```
 
 ### Loading
-While fetching jobs:
+While fetching files:
 ```
-Fetching jobs from Moonraker...
+Fetching files from Moonraker...
 ```
 
 ## Technical Details
 
 ### Data Source
-Job history is fetched from Moonraker's `/server/history/list` API endpoint with:
-- Limit: 50 jobs
-- Order: Descending (most recent first)
+Available files are fetched from Moonraker's `/server/files/list?root=gcodes` API endpoint.
 
 ### Job Start Method
-Jobs are started using the `SDCARD_PRINT_FILE` GCode command, which instructs Klipper to begin printing the specified file from the virtual SD card.
+Jobs are started using the `SDCARD_PRINT_FILE` GCode command, which instructs Klipper to begin printing the specified file.
 
 ## Notes
 
-- The job list shows a maximum of 50 recent jobs
-- Jobs are automatically fetched when switching to the Jobs tab
-- Manual refresh is available via the `r` key
+- The file list shows all .gcode files in the gcodes directory
+- Files are automatically fetched when switching to the Jobs tab
 - Starting a job requires an active connection to the printer
 - The selected filename must exist in the printer's G-code files directory
+- Mouse scrolling and clicking provide quick navigation and selection

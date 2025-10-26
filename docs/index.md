@@ -24,8 +24,8 @@ features:
     title: Terminal User Interface (TUI)
     details: Full-featured dashboard with real-time monitoring, interactive controls, and mouse support
   - icon: 🌡️
-    title: Interactive Temperature Control
-    details: Compact temperature bar with clickable setpoints - click any temperature to edit and press Enter to apply
+    title: Interactive Temperature & Fan Control
+    details: Compact display with clickable setpoints and fan speeds - click any value to edit and press Enter to apply
   - icon: 📍
     title: Interactive Position Control
     details: Click-to-move position bar with coordinates and home button for quick axis control
@@ -33,8 +33,8 @@ features:
     title: Real-Time WebSocket Connection
     details: Connects directly to Moonraker using WebSocket API for real-time data without polling
   - icon: ⚡
-    title: Built with Rust
-    details: Leverages Rust's memory safety and performance for a fast, low-latency experience
+    title: Built with Rust 2024
+    details: Leverages Rust's memory safety and performance with modern edition features for maximum speed
   - icon: 🎨
     title: Rich Terminal Coloring
     details: Color-coded output for easy readability - green for responses, yellow for warnings, red for errors
@@ -43,19 +43,19 @@ features:
     details: Familiar REPL interface with command history, tab completion, and syntax highlighting
   - icon: 🖨️
     title: Full Klipper Control
-    details: Submit G-code, execute macros, monitor temperatures, and manage your 3D printer
-  - icon: 📚
-    title: Job History Browser
-    details: Browse recent print jobs, view statistics, and start new prints with a single click
+    details: Submit G-code, execute macros, monitor temperatures, control fans, and manage your 3D printer
+  - icon: �
+    title: File Browser with Mouse Support
+    details: Browse available G-code files, scroll with mouse wheel, click to select, and start prints instantly
   - icon: 🔧
     title: Scriptable
     details: Use in scripts or with GNU Parallel for managing multiple printers simultaneously
   - icon: 🚨
     title: Emergency Stop
     details: Quick Ctrl+C emergency stop support for immediate printer shutdown
-  - icon: 📦
-    title: Simple Configuration
-    details: Easy setup via command-line arguments or configuration file
+  - icon: �
+    title: Dynamic Sensor Discovery
+    details: Automatically detects all temperature sensors, fans, and MCU temps - no manual configuration needed
 ---
 
 ## Quick Example
@@ -68,9 +68,11 @@ moonriver --host 192.168.1.100 --port 7125
 
 # Interactive dashboard with:
 # - Temperature bar (click setpoints to edit)
+# - Fan speed control (click percentages to edit)
 # - Position bar (click coordinates to move)
-# - Job browser (press j)
+# - Job browser with mouse scroll and click (press j)
 # - Console (press c)
+# - Global temperature/position toggles (t/l keys)
 # - Mouse support throughout
 ```
 
