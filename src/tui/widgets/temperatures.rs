@@ -285,28 +285,33 @@ pub fn get_temp_bounds(area: Rect, app: &crate::tui::app::App) -> Vec<(TempBarEl
     
     // Fan speeds (if available) - make them clickable
     for (fan_idx, fan) in app.printer.temperatures.fans.iter().enumerate() {
-        x += text_width("  "); // spacing before fan
+        // Account for spacing before fan (rendered as separate span)
+        x += text_width("  ");
+        
+        // The clickable area starts with the emoji
         let fan_start = x;
         
         let editing_fan = app.fan_edit_target
             .map(|target| target.index == fan_idx)
             .unwrap_or(false) && app.fan_input.mode == crate::tui::app::InputMode::Editing;
         
+        // Build the text exactly as rendered: emoji + percentage (+ optionally rpm)
         let fan_text = if editing_fan {
             format!("🌀[{}%]", 
                 if app.fan_input.value.is_empty() { "_" } else { &app.fan_input.value }
             )
         } else {
             let percent = (fan.speed * 100.0) as u8;
+            let base = format!("🌀{}%", percent);
             if let Some(rpm) = fan.rpm {
-                format!("🌀{}%({:.0}rpm)", percent, rpm)
+                format!("{}({:.0}rpm)", base, rpm)
             } else {
-                format!("🌀{}%", percent)
+                base
             }
         };
         
         let fan_width = text_width(&fan_text);
-        x += fan_width;
+        x += fan_width; // Move x to end of this fan's text
         
         bounds.push((
             TempBarElement::Fan(fan_idx),
