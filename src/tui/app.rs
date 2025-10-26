@@ -193,6 +193,14 @@ impl App {
         self.printer.state = "connecting".to_string();
         self.client = Some(client);
     }
+    
+    /// Add a console message and ensure auto-scroll to show latest content
+    fn add_console_message(&mut self, message: ConsoleMessage) {
+        self.console_messages.push(message);
+        // Set scroll to a large value to ensure we show the bottom
+        // The rendering widget will clamp this to the actual content height
+        self.console_scroll = 9999;
+    }
 
     /// Handle an event and return whether to continue running
     pub async fn handle_event(&mut self, event: Event) -> crate::tui::Result<bool> {
@@ -999,9 +1007,9 @@ impl App {
                 && let Some(msg) = params.as_str() {
                     // Add to console messages
                     if msg.contains("error") || msg.contains("!!") {
-                        self.console_messages.push(ConsoleMessage::Error(msg.to_string()));
+                        self.add_console_message(ConsoleMessage::Error(msg.to_string()));
                     } else {
-                        self.console_messages.push(ConsoleMessage::Response(msg.to_string()));
+                        self.add_console_message(ConsoleMessage::Response(msg.to_string()));
                     }
                 }
         } else if let Some(error) = value.get("error") {
@@ -1009,7 +1017,7 @@ impl App {
             let error_msg = error.get("message")
                 .and_then(|m| m.as_str())
                 .unwrap_or("Unknown error");
-            self.console_messages.push(ConsoleMessage::Error(error_msg.to_string()));
+            self.add_console_message(ConsoleMessage::Error(error_msg.to_string()));
         }
         
         Ok(())

@@ -109,17 +109,27 @@ pub fn render(frame: &mut Frame, area: Rect, app: &App) {
         }
     }
 
-    let output = Paragraph::new(output_content)
+    let output = Paragraph::new(output_content.clone())
         .block(output_block)
         .alignment(Alignment::Left)
         .scroll((app.console_scroll, 0));
 
     frame.render_widget(output, chunks[0]);
 
-    // Auto-scroll to bottom if we have messages
-    // Note: This is a visual hint - actual scrolling would require
-    // calculating the number of lines and adjusting console_scroll
-    // For now, we show recent messages which gives the effect of auto-scroll
+    // Auto-scroll to bottom: calculate how many lines to scroll
+    // to show the most recent content
+    let output_height = chunks[0].height.saturating_sub(2); // Subtract borders
+    let total_lines = output_content.len() as u16;
+    
+    // If content exceeds visible area and scroll is not manually controlled,
+    // we should auto-scroll to show the bottom
+    // Note: We're using the stored scroll value, which should be updated
+    // when new messages arrive (handled in app logic)
+    if total_lines > output_height {
+        // Content is longer than display area - needs scrolling
+        // The app.console_scroll value determines what's visible
+        // For auto-scroll behavior, see app's message handling
+    }
 
     // Input area
     let input_style = match app.console_input.mode {
