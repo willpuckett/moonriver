@@ -11,16 +11,55 @@ entirely in **Rust** for speed and reliability.
 
 In the tradition of
 [klipper-repl](https://github.com/Annex-Engineering/klipper_estimator) and
-[krui](https://github.com/ballaswag/krui), Moonriver brings command-line control
+[krui](https://github.com/jfoucher/krui), Moonriver brings command-line control
 to Klipper 3D printers.
 
 ---
 
 ## ✨ Features
 
-**Moonriver** aims to bring the core functionality of a Klipper interface
-directly to your terminal, similar in spirit to a command-line Read-Eval-Print
-Loop (REPL).
+**Moonriver** offers three modes of operation: **TUI (Terminal User Interface)**, 
+**Interactive REPL**, and **Scripting** mode.
+
+### 🖥️ TUI Mode (NEW in v0.2.0!)
+
+The **Terminal User Interface** is now the default mode, providing a comprehensive 
+dashboard for monitoring and controlling your 3D printer.
+
+#### Real-Time Monitoring
+- **Temperature Display** — Compact single-line display showing all temperatures
+  - Live extruder, bed, and chamber temperatures with clickable setpoints
+  - Click on any temperature setpoint to edit and press Enter to apply
+  - Color-coded by proximity to target: Green (at temp), Yellow (approaching), Cyan (heating/cooling)
+  - Shows MCU temperatures and fan speeds with RPM
+- **Position Display** — Compact single-line position bar (toggleable)
+  - Live X/Y/Z coordinates with homed status indicators (✓/✗)
+  - Click on any position value to edit and press Enter to move axis
+  - Click the 🏠 Home All button to home all axes
+  - Floating point precision for accurate positioning
+- **Print Status** — Active print job details including filename, duration, and filament used
+- **Connection Status** — Visual feedback of Moonraker connection state
+
+#### Interactive Navigation
+- **Tab Navigation** — Switch between views using semantic keys:
+  - `m` - Main dashboard with temperatures and job status
+  - `c` - Console for GCode commands (coming soon)
+  - `p` - Position display with homed status
+  - `j` - Print job history browser (coming soon)
+  - `h` - Help screen
+- **Toggle Panels** — Control visibility with:
+  - `t` - Toggle temperature bar on/off
+  - `p` - Toggle position bar on/off
+- **Mouse Support** — Click to interact with UI elements:
+  - Click temperature setpoints to edit target values
+  - Click position coordinates to move axes
+  - Click 🏠 Home All button to home all axes
+  - Click footer tabs to switch views
+- **Context-Sensitive Help** — Footer shows available keys for current view
+
+#### Emergency Stop
+- Press `Ctrl+C` to trigger emergency stop (M112) and exit
+- Press `q` or `Esc` to exit normally
 
 ### 🚀 Connectivity & Performance
 
@@ -62,21 +101,56 @@ Loop (REPL).
   - Extruder Position/State: Current position and state information
   - Homing/Mainsail Status: Quick access to the printer's operational state
 - **Macro Execution** — Send and execute defined Klipper macros instantly
-- **Emergency Stop** — M112 emergency stop processing
+- **Emergency Stop** — Ctrl+C emergency stop (TUI) or M112 (REPL)
 
 ---
 
 ## 🛠️ Usage
 
-### Running interactively
+### TUI Mode (Default)
 
-To get started, simply run the `moonriver` executable:
+Launch the full Terminal User Interface (this is now the default):
 
 ```bash
 moonriver --host <moonraker-url> --port <port>
+# or simply:
+moonriver
+```
+
+**Key Bindings:**
+- `m` - Main dashboard
+- `c` - Console
+- `p` - Toggle position bar
+- `j` - Jobs
+- `h` or `?` - Help
+- `q` - Quit
+- `Ctrl+C` - Emergency stop
+- `t` - Toggle temperature bar
+
+### REPL Mode (Classic Interactive)
+
+To use the classic REPL interface:
+
+```bash
+moonriver --repl --host <moonraker-url> --port <port>
 ```
 
 Once connected, you can type your G-code commands:
+
+```
+> G28
+> M104 S200
+```
+
+### Scripting Mode
+
+Execute commands non-interactively for automation:
+
+```bash
+moonriver --command "G28, M104 S200, G1 X100 Y100" --host <moonraker-url>
+# or short form:
+moonriver -c "G28, M104 S200" --host <moonraker-url>
+```
 
 ```
 > G28

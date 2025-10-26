@@ -20,7 +20,12 @@ pub struct Cli {
     #[arg(long)]
     pub api_key: Option<String>,
 
-    /// Commands to execute in non-interactive mode (separated by commas)
-    #[arg(trailing_var_arg = true)]
-    pub commands: Vec<String>,
+    /// Launch REPL (Read-Eval-Print Loop) mode instead of TUI
+    #[arg(long)]
+    pub repl: bool,
+
+    /// Execute commands in non-interactive mode (implies --repl)
+    /// Multiple commands can be separated by commas
+    #[arg(long, short = 'c')]
+    pub command: Option<String>,
 }

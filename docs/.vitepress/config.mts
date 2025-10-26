@@ -38,6 +38,9 @@ export default defineConfig({
       {
         text: "Features",
         items: [
+          { text: "Temperature Bar", link: "/features/temperature-bar" },
+          { text: "Position Bar", link: "/features/position-bar" },
+          { text: "Job History Browser", link: "/features/job-history-browser" },
           { text: "Tab Completion", link: "/features/tab-completion" },
           {
             text: "Syntax Highlighting",

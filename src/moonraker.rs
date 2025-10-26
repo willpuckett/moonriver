@@ -79,22 +79,37 @@ impl MoonrakerClient {
     }
 
     async fn subscribe_to_updates(&mut self) -> Result<()> {
+        // Subscribe to updates for all objects using wildcard approach
+        // This subscribes to the base objects we know about
         let request = json!({
             "jsonrpc": "2.0",
             "method": "printer.objects.subscribe",
             "params": {
                 "objects": {
                     "gcode_move": null,
-                    "toolhead": null,
-                    "extruder": null,
-                    "heater_bed": null,
-                    "print_stats": null,
+                    "toolhead": ["position", "homed_axes"],
+                    "extruder": ["temperature", "target", "power"],
+                    "heater_bed": ["temperature", "target", "power"],
+                    "print_stats": ["state", "filename", "total_duration", "print_duration", "filament_used"],
+                    "fan": ["speed", "rpm"],
+                    "mcu": ["temperature"],
+                    "temperature_host": ["temperature"],
                 }
             },
             "id": self.next_id()
         });
 
         self.send_raw(&request.to_string()).await?;
+        
+        // Query for ALL available objects to discover temperature sensors and fans
+        let list_request = json!({
+            "jsonrpc": "2.0",
+            "method": "printer.objects.list",
+            "params": {},
+            "id": self.next_id()
+        });
+        
+        self.send_raw(&list_request.to_string()).await?;
         Ok(())
     }
 
@@ -102,6 +117,35 @@ impl MoonrakerClient {
         let id = self.request_id;
         self.request_id += 1;
         id
+    }
+
+    /// Subscribe to additional objects (called after discovering available objects)
+    pub async fn subscribe_to_additional_objects(&mut self, objects: Vec<String>) -> Result<()> {
+        let mut subscribe_objects = serde_json::Map::new();
+        
+        for obj in objects {
+            // Subscribe to temperature sensors and fans
+            if obj.starts_with("temperature_sensor ") || obj.starts_with("temperature_fan ") {
+                subscribe_objects.insert(obj, json!(["temperature"]));
+            } else if obj.starts_with("heater_fan ") || obj.starts_with("controller_fan ") {
+                subscribe_objects.insert(obj, json!(["speed", "rpm"]));
+            }
+        }
+        
+        if !subscribe_objects.is_empty() {
+            let request = json!({
+                "jsonrpc": "2.0",
+                "method": "printer.objects.subscribe",
+                "params": {
+                    "objects": subscribe_objects
+                },
+                "id": self.next_id()
+            });
+            
+            self.send_raw(&request.to_string()).await?;
+        }
+        
+        Ok(())
     }
 
     async fn send_raw(&self, message: &str) -> Result<()> {
