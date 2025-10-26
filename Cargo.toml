@@ -1,7 +1,7 @@
 [package]
 name = "moonriver"
 version = "0.2.0"
-edition = "2021"
+edition = "2024"
 authors = ["Moonriver Contributors"]
 description = "A terminal-based console for connecting to and interacting with Klipper instances via the Moonraker WebSocket API"
 readme = "README.md"

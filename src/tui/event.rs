@@ -39,8 +39,8 @@ impl EventHandler {
                 result = tokio::task::spawn_blocking(|| {
                     crossterm::event::poll(Duration::from_millis(0))
                 }) => {
-                    if let Ok(Ok(true)) = result {
-                        if let Ok(event) = crossterm::event::read() {
+                    if let Ok(Ok(true)) = result
+                        && let Ok(event) = crossterm::event::read() {
                             match event {
                                 CrosstermEvent::Key(key) => return Some(Event::Key(key)),
                                 CrosstermEvent::Mouse(mouse) => return Some(Event::Mouse(mouse)),
@@ -48,7 +48,6 @@ impl EventHandler {
                                 _ => {}
                             }
                         }
-                    }
                 }
             }
         }

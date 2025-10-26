@@ -51,11 +51,10 @@ pub async fn run(
         terminal.draw(|frame| ui::render(app, frame))?;
 
         // Handle events
-        if let Some(event) = event_handler.next().await {
-            if !app.handle_event(event).await? {
+        if let Some(event) = event_handler.next().await
+            && !app.handle_event(event).await? {
                 break;
             }
-        }
 
         // Update app state from WebSocket messages
         app.update().await?;

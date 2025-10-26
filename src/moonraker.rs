@@ -200,19 +200,17 @@ impl MoonrakerClient {
         self.send_raw(&request.to_string()).await?;
 
         // Wait for response
-        if let Some(response) = self.read.recv().await {
-            if let Ok(value) = serde_json::from_str::<Value>(&response) {
-                if let Some(result) = value.get("result") {
-                    let mut macros = Vec::new();
-                    if let Some(obj) = result.as_object() {
-                        for key in obj.keys() {
-                            macros.push(key.clone());
-                        }
+        if let Some(response) = self.read.recv().await
+            && let Ok(value) = serde_json::from_str::<Value>(&response)
+            && let Some(result) = value.get("result") {
+                let mut macros = Vec::new();
+                if let Some(obj) = result.as_object() {
+                    for key in obj.keys() {
+                        macros.push(key.clone());
                     }
-                    return Ok(macros);
                 }
+                return Ok(macros);
             }
-        }
 
         Ok(Vec::new())
     }

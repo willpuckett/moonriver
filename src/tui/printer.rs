@@ -160,8 +160,8 @@ pub fn update_from_json(state: &mut PrinterState, data: &serde_json::Value) {
                                     key == "mcu" || 
                                     key == "temperature_host";
                 
-                if is_temp_sensor {
-                    if let Some(temp) = value.get("temperature").and_then(|v| v.as_f64()) {
+                if is_temp_sensor
+                    && let Some(temp) = value.get("temperature").and_then(|v| v.as_f64()) {
                         let name = if let Some(stripped) = key.strip_prefix("temperature_sensor ") {
                             stripped.to_string()
                         } else if let Some(stripped) = key.strip_prefix("temperature_fan ") {
@@ -182,7 +182,6 @@ pub fn update_from_json(state: &mut PrinterState, data: &serde_json::Value) {
                             });
                         }
                     }
-                }
                 
                 // Fans - look for fan objects with speed property
                 let is_fan = key == "fan" || 
@@ -190,8 +189,8 @@ pub fn update_from_json(state: &mut PrinterState, data: &serde_json::Value) {
                             key.starts_with("controller_fan ") || 
                             key.starts_with("temperature_fan ");
                 
-                if is_fan {
-                    if let Some(speed) = value.get("speed").and_then(|v| v.as_f64()) {
+                if is_fan
+                    && let Some(speed) = value.get("speed").and_then(|v| v.as_f64()) {
                         let rpm = value.get("rpm").and_then(|v| v.as_f64());
                         let name = if key == "fan" {
                             "Part".to_string()
@@ -217,7 +216,6 @@ pub fn update_from_json(state: &mut PrinterState, data: &serde_json::Value) {
                             });
                         }
                     }
-                }
             }
         }
 
@@ -225,11 +223,10 @@ pub fn update_from_json(state: &mut PrinterState, data: &serde_json::Value) {
         if let Some(toolhead) = status.get("toolhead") {
             if let Some(position) = toolhead.get("position").and_then(|v| v.as_array()) {
                 for (i, val) in position.iter().enumerate() {
-                    if i < 4 {
-                        if let Some(pos) = val.as_f64() {
+                    if i < 4
+                        && let Some(pos) = val.as_f64() {
                             state.toolhead.position[i] = pos;
                         }
-                    }
                 }
             }
             if let Some(homed) = toolhead.get("homed_axes").and_then(|v| v.as_str()) {

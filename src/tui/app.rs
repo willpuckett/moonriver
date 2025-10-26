@@ -751,8 +751,8 @@ impl App {
                         let speed_value = (speed_percent as f64) / 100.0;
                         
                         // Determine which fan to control
-                        if let Some(target) = self.fan_edit_target {
-                            if let Some(fan) = self.printer.temperatures.fans.get_mut(target.index) {
+                        if let Some(target) = self.fan_edit_target
+                            && let Some(fan) = self.printer.temperatures.fans.get_mut(target.index) {
                                 // Use M106 for part fan (fan), or SET_FAN_SPEED for named fans
                                 let gcode = if fan.name == "Part" {
                                     format!("M106 S{}", (speed_value * 255.0) as u8)
@@ -776,7 +776,6 @@ impl App {
                                     ));
                                 }
                             }
-                        }
                     } else {
                         self.console_messages.push(ConsoleMessage::Error(
                             "Fan speed must be between 0 and 100%".to_string()
@@ -915,11 +914,10 @@ impl App {
             }
             
             // Try to receive any pending messages
-            if let Some(message) = client.try_receive_message() {
-                if let Err(e) = self.process_message(&message) {
+            if let Some(message) = client.try_receive_message()
+                && let Err(e) = self.process_message(&message) {
                     eprintln!("Error processing message: {}", e);
                 }
-            }
         }
         Ok(())
     }
@@ -929,8 +927,8 @@ impl App {
         let value: serde_json::Value = serde_json::from_str(message)?;
         
         // Handle objects.list response to subscribe to discovered sensors and fans
-        if let Some(result) = value.get("result") {
-            if let Some(objects) = result.get("objects").and_then(|o| o.as_array()) {
+        if let Some(result) = value.get("result")
+            && let Some(objects) = result.get("objects").and_then(|o| o.as_array()) {
                 // This is an objects.list response
                 let object_names: Vec<String> = objects
                     .iter()
@@ -963,25 +961,22 @@ impl App {
                     }
                 }
             }
-        }
         
         // Update printer state from status updates
         super::printer::update_from_json(&mut self.printer, &value);
         
         // Handle GCode responses for console
         if let Some(method) = value.get("method").and_then(|m| m.as_str()) {
-            if method == "notify_gcode_response" {
-                if let Some(params) = value.get("params").and_then(|p| p.get(0)) {
-                    if let Some(msg) = params.as_str() {
-                        // Add to console messages
-                        if msg.contains("error") || msg.contains("!!") {
-                            self.console_messages.push(ConsoleMessage::Error(msg.to_string()));
-                        } else {
-                            self.console_messages.push(ConsoleMessage::Response(msg.to_string()));
-                        }
+            if method == "notify_gcode_response"
+                && let Some(params) = value.get("params").and_then(|p| p.get(0))
+                && let Some(msg) = params.as_str() {
+                    // Add to console messages
+                    if msg.contains("error") || msg.contains("!!") {
+                        self.console_messages.push(ConsoleMessage::Error(msg.to_string()));
+                    } else {
+                        self.console_messages.push(ConsoleMessage::Response(msg.to_string()));
                     }
                 }
-            }
         } else if let Some(error) = value.get("error") {
             // Handle error responses
             let error_msg = error.get("message")
@@ -999,8 +994,8 @@ impl App {
         
         match self.http_client.get(&url).send().await {
             Ok(response) => {
-                if let Ok(json) = response.json::<serde_json::Value>().await {
-                    if let Some(files) = json.get("result").and_then(|r| r.as_array()) {
+                if let Ok(json) = response.json::<serde_json::Value>().await
+                    && let Some(files) = json.get("result").and_then(|r| r.as_array()) {
                         let mut job_items = Vec::new();
                         
                         for file in files {
@@ -1037,7 +1032,6 @@ impl App {
                             self.job_list.state.select(Some(0));
                         }
                     }
-                }
             }
             Err(e) => {
                 self.console_messages.push(ConsoleMessage::Error(
