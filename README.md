@@ -9,6 +9,8 @@ instances via the **Moonraker** WebSocket API.
 control your 3D printer, all from the comfort of your command line. Built
 entirely in **Rust** for speed and reliability.
 
+In the tradition of [klipper-repl](https://github.com/Annex-Engineering/klipper_estimator) and [krui](https://github.com/ballaswag/krui), Moonriver brings command-line control to Klipper 3D printers.
+
 ---
 
 ## ✨ Features
@@ -17,46 +19,44 @@ entirely in **Rust** for speed and reliability.
 directly to your terminal, similar in spirit to a command-line Read-Eval-Print
 Loop (REPL).
 
-### 🚀 **Connectivity & Performance**
+### 🚀 Connectivity & Performance
 
-- **Moonraker WebSocket Integration:** Connects directly to a remote Moonraker
-  instance using its WebSocket API, providing **real-time data** without
-  polling.
-- **Built with Rust:** Leverages Rust's memory safety and performance
-  characteristics for a **fast, low-latency** experience.
-- **Simple Configuration:** Easily configure the Moonraker host address and API
-  key via a simple configuration file or command-line arguments.
-- Automatic reconnection if Klipper restarts or is unavailable
-- Scripting support
-- Multiple G-Code commands per line -- use `,` as a separator
-- Tab autocompletion for user-defined macros
-- Support for multiple printers via
+- **Moonraker WebSocket Integration** — Connects directly to a remote Moonraker
+  instance using its WebSocket API, providing real-time data without polling
+- **Built with Rust** — Leverages Rust's memory safety and performance
+  characteristics for a fast, low-latency experience
+- **Simple Configuration** — Easily configure the Moonraker host address and API
+  key via a simple configuration file or command-line arguments
+- **Automatic Reconnection** — Reconnects automatically if Klipper restarts or is unavailable
+- **Scripting Support** — Run commands non-interactively for automation
+- **Multiple Commands** — Execute multiple G-Code commands per line using `,` as a separator
+- **Tab Autocompletion** — Tab completion for user-defined macros
+- **Multiple Printers** — Control multiple printers via
   [GNU Parallel](https://www.gnu.org/software/parallel/)
 
-### 💻 **Terminal Experience**
+### 💻 Terminal Experience
 
-- **Rich Terminal Coloring:** Utilizes terminal color schemes to categorize and
-  highlight different types of information (e.g., green for G-code responses,
-  yellow for warnings, red for errors), ensuring **easy readability** at a
-  glance.
-- **Interactive Command Line:** Provides a familiar, interactive command-line
-  interface for sending commands.
-- **Command History:** Access and reuse previous commands using the up and down
-  arrow keys.
-- Syntax highlighting for both G-Code and user-defined macros
+- **Rich Terminal Coloring** — Color-coded output categorizes different types
+  of information (green for G-code responses, yellow for warnings, red for
+  errors) for easy readability at a glance
+- **Interactive Command Line** — Familiar, interactive command-line interface
+  for sending commands
+- **Command History** — Access and reuse previous commands using the up and
+  down arrow keys
+- **Syntax Highlighting** — Syntax highlighting for both G-Code and user-defined macros
 
-### 🖨️ **Klipper & Printer Control**
+### 🖨️ Klipper & Printer Control
 
-- **G-code Submission:** Directly submit G-code commands to your Klipper
-  instance and view the immediate responses.
-- **Configuration File Access:** Easily retrieve and potentially modify Klipper
-  configuration files (`printer.cfg`, etc.) directly through the console.
-- **Printer Status Monitoring:** Display key status information, such as:
-  - **Tool/Bed Temperatures:** Real-time temperature readings and target values.
-  - **Extruder Position/State:** Current position and state information.
-  - **Homing/Mainsail Status:** Quick access to the printer's operational state.
-- **Macro Execution:** Send and execute defined Klipper macros instantly.
-- M112 emergency stop processing
+- **G-code Submission** — Directly submit G-code commands to your Klipper
+  instance and view immediate responses
+- **Configuration File Access** — Easily retrieve and potentially modify Klipper
+  configuration files (`printer.cfg`, etc.) directly through the console
+- **Printer Status Monitoring** — Display key status information:
+  - Tool/Bed Temperatures: Real-time temperature readings and target values
+  - Extruder Position/State: Current position and state information
+  - Homing/Mainsail Status: Quick access to the printer's operational state
+- **Macro Execution** — Send and execute defined Klipper macros instantly
+- **Emergency Stop** — M112 emergency stop processing
 
 ---
 
@@ -113,25 +113,25 @@ the command buffer and send an emergency stop signal to Klipper.
 
 ## 💡 Installation
 
-### **Homebrew (macOS)**
+### Homebrew (macOS)
 
 ```bash
 brew install moonriver
 ```
 
-### **From crates.io (Requires Rust/Cargo)**
+### From crates.io
 
 ```bash
 cargo install moonriver
 ```
 
-### **Pre-built Binaries**
+### Pre-built Binaries
 
 ```bash
 cargo binstall moonriver
 ```
 
-### **Debian/Ubuntu (.deb packages)**
+### Debian/Ubuntu (.deb packages)
 
 Download the appropriate `.deb` file from the
 [releases page](https://github.com/willpuckett/moonriver/releases):
@@ -144,7 +144,7 @@ wget https://github.com/willpuckett/moonriver/releases/latest/download/moonriver
 sudo dpkg -i moonriver_VERSION_amd64.deb
 ```
 
-### **From Source**
+### From Source
 
 ```bash
 git clone https://github.com/willpuckett/moonriver.git
@@ -157,6 +157,6 @@ sudo cp target/release/moonriver /usr/local/bin/
 
 ## 🤝 Contributing
 
-We welcome contributions\! If you have suggestions or want to report a bug,
+We welcome contributions! If you have suggestions or want to report a bug,
 please open an issue on GitHub. If you're interested in contributing code, feel
-free to submit a Pull Request\!
+free to submit a Pull Request!
