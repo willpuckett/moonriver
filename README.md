@@ -1,5 +1,9 @@
 # Moonriver 🌙
 
+[![Crates.io](https://img.shields.io/crates/v/moonriver.svg)](https://crates.io/crates/moonriver)
+[![Release](https://github.com/willpuckett/moonriver/actions/workflows/release.yml/badge.svg)](https://github.com/willpuckett/moonriver/actions/workflows/release.yml)
+[![Docs](https://github.com/willpuckett/moonriver/actions/workflows/docs.yml/badge.svg)](https://github.com/willpuckett/moonriver/actions/workflows/docs.yml)
+
 <img src="docs/public/logo.svg" align="right" width="200" alt="Moonriver Logo" />
 
 A terminal-based console for connecting to and interacting with **Klipper**
